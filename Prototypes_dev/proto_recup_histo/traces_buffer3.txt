@@ -1,0 +1,6 @@
+gros problème :
+
+"2006-08-12 04:23:00"	"S"	"chgt Etor de num 43 et de nom DPP_P1_PD"
+
+plusieurs lignes avec même état false et plusieurs dates (false)
+

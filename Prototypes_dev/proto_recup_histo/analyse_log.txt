@@ -1,0 +1,132 @@
+PD319307.S12
+"Erreur de doublonc de colonne : v_time=2007-03-19 02:02:00-v_evenement=m-v_nom_voie=QCO_VMER_PD____e________100-v_lettre_voie=e-v_ch2=2.94-v_ch3=-v_ch4=-v_ch5=-v_ch6=-v_ch7=-v_ch8=-v_ch9=-v_ch10=-v_ch11=-v_ch12=-v_ch13=-v_ch14=-v_ch15=-v_ch16=-v_ch17=-v_ch18=-v_ch19=-v_ch20=-v_ch21=-v_ch22=-v_ch23=-v_ch24=-v_ch25=-v_ch26=-v_ch27=-v_ch28=-v_ch29=-v_ch30=-v_ch31=-v_ch32=-v_ch33=-v_ch24=-v_ch35=-v_ch36=-v_ch37=-v_ch38=-v_ch39=-v_ch40=-v_ch41=-v_ch42=-v_ch43=-v_ch44=-v_ch45=-v_ch46=-v_ch47=-v_ch48=-v_ch49=-v_ch50=-v_ch51=-v_ch52=-v_ch53=-v_ch54=-v_ch55=-v_ch56=-v_ch57=-v_ch58=-v_ch59=-v_ch60="
+"2007-03-19"	"m"	"PD319307.S12"	"02h02"	"e0294"
+"2007-03-19"	"m"	"PD319307.S12"	"02h02"	"e0293"
+
+select count(*) from sh_pd.tmp_load_file_jour_releves -- 988748 2007 2012 2017
+
+en fichier 2007=337900  2017=353530 2012=95522
+
+select 337900 + 353530 + 95522
+
+select count(*) from sh_pd.tmp_load_file_jour_releves where evenement='m'-- 786952
+
+select 337900 + 353530 + 95522 = 786952
+
+donc OK.
+
+PD331D07.S53
+"Erreur de doublonc de colonne : v_time=2008-01-05 02:02:00-v_evenement=m-v_nom_voie=QEP_MOREE_PD____m________100-v_lettre_voie=m-v_ch2=1.24-v_ch3=1.01-v_ch4=0.84-v_ch5=-v_ch6=-v_ch7=-v_ch8=-v_ch9=-v_ch10=-v_ch11=-v_ch12=-v_ch13=-v_ch14=-v_ch15=-v_ch16=-v_ch17=-v_ch18=-v_ch19=-v_ch20=-v_ch21=-v_ch22=-v_ch23=-v_ch24=-v_ch25=-v_ch26=-v_ch27=-v_ch28=-v_ch29=-v_ch30=-v_ch31=-v_ch32=-v_ch33=-v_ch24=-v_ch35=-v_ch36=-v_ch37=-v_ch38=-v_ch39=-v_ch40=-v_ch41=-v_ch42=-v_ch43=-v_ch44=-v_ch45=-v_ch46=-v_ch47=-v_ch48=-v_ch49=-v_ch50=-v_ch51=-v_ch52=-v_ch53=-v_ch54=-v_ch55=-v_ch56=-v_ch57=-v_ch58=-v_ch59=-v_ch60="
+
+02h02 e0124 m0101 n0084
+02h02 m0104 o0045
+
+create table sh_pd.tmp_load_file_jour_releves_backup as select * from sh_pd.tmp_load_file_jour_releves
+create table sh_pd.tmp_load_file_jour_releves_voie_ana_backup as select * from sh_pd.tmp_load_file_jour_releves_voie_ana
+
+"insert into sh_pd.archives_releves (time,evenement,libelle_evenement,QCO_VMER_PD____e________100,VCO_1VMER_PD____f________100) values(2007-10-29 02:36:00,m,mesure,1.02)"
+
+02h36 e0102
+02h36 e0097 f0058
+
+"insert into sh_pd.archives_releves (time,evenement,libelle_evenement,QCO_VMER_PD____e________100,QEP_MOREE_PD____m________100,VEP_1MOREE_PD____n________100) values(2007-12-31 05:22:00,m,mesure,1.03,0.65)"
+PD331D07.S53
+
+=============== le 25/06/2024 à 10h29
+
+12786 erreur dans sh_pd.archives_releves_log.
+
+sur les fichiers
+
+"PD327N17.S48"
+"PD303717.S27"
+"PD318D17.S51"
+"NULL"
+"PD328817.S35"
+"PD316707.S29" : seulement 2 erreurs : pour les mesures sur j et k absente de l'entête. seulement 2
+"PD304D17.S49"
+"PD313N17.S46"
+"PD307817.S32"
+"PD325D17.S52"
+"PD315517.S20"
+"PD323O17.S43"
+"PD302O17.S40"
+"PD311917.S37"
+"PD304917.S36"
+"PD330O17.S44"
+"PD309O17.S41"
+"PD320N17.S47"
+"PD327217.S09"
+"PD329517.S22"
+"PD311D17.S50"
+"PD306N17.S45"
+"PD314817.S33"
+"PD325917.S39"
+"PD321817.S34"
+"PD316O17.S42"
+"PD318917.S38"
+"PD310717.S28"
+
+
+PD322517.S21
+
+insert into sh_pd.archives_releves (time,evenement,libelle_evenement,
+YAV_V1_PD____aa________100,
+QAV_V1_PD____bb________100,
+VAV_V1_PD____cc________100,
+YCO_VMER_PD____dd________100,
+QCO_VMER_PD____ee________100,
+VCO_1VMER_PD____ff________100,
+VCO_2VMER_PD____gg________100,
+VCO_3VMER_PD____hh________100,
+YAM_V4_PD____ii________100,
+YAM_V1_PD____jj________100,
+YBP_BP_PD____kk________100,
+YEP_MOREE_PD____ll________100,
+QEP_MOREE_PD____mm________100,
+VEP_1MOREE_PD____nn________100,
+VEP_2MOREE_PD____oo________100,
+VEP_3MOREE_PD____pp________100,
+NB_APPEL_PD____qq________10,
+QAV2_V1_PD____rr________100,
+YEP_CROULT_CR____ss________100,
+QEP_CROULT_CR____tt________100,
+QEP_CROULT_UF_CR____uu________100,
+VEP_1DCROULT_CR____vv________1000,
+VEP_2DCROULT_CR____ww________1000,
+VEP_3DCROULT_CR____xx________1000,
+VEP_1GCROULT_CR____yy________1000,
+VEP_2GCROULT_CR____z1________1000,
+VEP_3GCROULT_CR____za________1000)
+
+values(2017-05-27 20:27:00,L,mesure,
+
+32.36,
+0.04,
+0,
+33.58,
+1.86,
+1.04,
+0,
+0,
+31.2,
+32.55,
+31.36,
+34.36,
+0.97,
+0.86,
+0.67,
+0,
+0,
+0.02,
+34.2,
+0.48,
+0.45,
+5.95,
+0,
+5.42,
+0,
+0)
+
+	"PD322517.S21"	"insert into sh_pd.archives_releves (time,evenement,libelle_evenement,
+	YAV_V1_PD____aa________100,QAV_V1_PD____bb________100,VAV_V1_PD____cc________100,YCO_VMER_PD____dd________100,QCO_VMER_PD____ee________100,VCO_1VMER_PD____ff________100,VCO_2VMER_PD____gg________100,VCO_3VMER_PD____hh________100,YAM_V4_PD____ii________100,YAM_V1_PD____jj________100,YBP_BP_PD____kk________100,YEP_MOREE_PD____ll________100,QEP_MOREE_PD____mm________100,VEP_1MOREE_PD____nn________100,VEP_2MOREE_PD____oo________100,VEP_3MOREE_PD____pp________100,NB_APPEL_PD____qq________10,QAV2_V1_PD____rr________100,YEP_CROULT_CR____ss________100,QEP_CROULT_CR____tt________100,QEP_CROULT_UF_CR____uu________100,VEP_1DCROULT_CR____vv________1000,VEP_2DCROULT_CR____ww________1000,VEP_3DCROULT_CR____xx________1000,VEP_1GCROULT_CR____yy________1000,VEP_2GCROULT_CR____z1________1000,VEP_3GCROULT_CR____za________1000) values(2017-05-27 20:27:00,L,mesure,32.36,0.04,0,33.58,1.86,1.04,0,0,31.2,32.55,31.36,34.36,0.97,0.86,0.67,0,0,0.02,34.2,0.48,0.45,5.95,0,5.42,0,0)"

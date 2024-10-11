@@ -1,0 +1,1127 @@
+-- 425453 mesure pour le fichier PD_fichier_nabyl_body07_12.csv 429374 en base 423393=OK + 5981=en erreur.
+DROP FUNCTION public.fill_archives_K;
+CREATE OR REPLACE FUNCTION public.fill_archives_K(
+	station in character varying (10)
+	)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+
+v_execute_1 			text;
+v_execute_2 			text;
+v_execute_K_100			text;
+v_execute_K_0			text;
+
+table_releves			character varying (100);
+table_entetes			character varying (100);
+table_tmp_releves 		character varying (100);
+table_tmp_entetes 		character varying (100);
+table_tmp_position		character varying (100);
+table_archivage			character varying (100);
+--table_log_archivage		character varying (100);
+table_position			character varying (100);
+table_log				character varying (100);
+message_retour 			text:='OK';
+
+v_first_time 		character varying (100);
+v_time 		 		character varying (100);
+v_ordre 			integer;
+v_first_ordre 		integer;
+v_evenement 		character varying (10);
+v_first_evenement	character varying (10);
+v_fichier 			character varying (100);
+v_first_fichier 	character varying (100);
+--
+v_ch1 character varying (100);
+v_ch2 character varying (100);
+v_ch3 character varying (100);
+v_ch4 character varying (100);
+v_ch5 character varying (100);
+v_ch6 character varying (100);
+v_ch7 character varying (100);
+v_ch8 character varying (100);
+v_ch9 character varying (100);
+v_ch10 character varying (100);
+v_ch11 character varying (100);
+v_ch12 character varying (100);
+v_ch13 character varying (100);
+v_ch14 character varying (100);
+v_ch15 character varying (100);
+v_ch16 character varying (100);
+v_ch17 character varying (100);
+v_ch18 character varying (100);
+v_ch19 character varying (100);
+v_ch20 character varying (100);
+--
+v_ch21 character varying (100);
+v_ch22 character varying (100);
+v_ch23 character varying (100);
+v_ch24 character varying (100);
+v_ch25 character varying (100);
+v_ch26 character varying (100);
+v_ch27 character varying (100);
+v_ch28 character varying (100);
+v_ch29 character varying (100);
+v_ch30 character varying (100);
+v_ch31 character varying (100);
+v_ch32 character varying (100);
+v_ch33 character varying (100);
+v_ch34 character varying (100);
+v_ch35 character varying (100);
+v_ch36 character varying (100);
+v_ch37 character varying (100);
+v_ch38 character varying (100);
+v_ch39 character varying (100);
+v_ch40 character varying (100);
+--
+v_ch41 character varying (100);
+v_ch42 character varying (100);
+v_ch43 character varying (100);
+v_ch44 character varying (100);
+v_ch45 character varying (100);
+v_ch46 character varying (100);
+v_ch47 character varying (100);
+v_ch48 character varying (100);
+v_ch49 character varying (100);
+v_ch50 character varying (100);
+v_ch51 character varying (100);
+v_ch52 character varying (100);
+v_ch53 character varying (100);
+v_ch54 character varying (100);
+v_ch55 character varying (100);
+v_ch56 character varying (100);
+v_ch57 character varying (100);
+v_ch58 character varying (100);
+v_ch59 character varying (100);
+v_ch60 character varying (100);
+
+------------------
+
+v_first_ch1 character varying (100);
+v_first_ch2 character varying (100);
+v_first_ch3 character varying (100);
+v_first_ch4 character varying (100);
+v_first_ch5 character varying (100);
+v_first_ch6 character varying (100);
+v_first_ch7 character varying (100);
+v_first_ch8 character varying (100);
+v_first_ch9 character varying (100);
+v_first_ch10 character varying (100);
+v_first_ch11 character varying (100);
+v_first_ch12 character varying (100);
+v_first_ch13 character varying (100);
+v_first_ch14 character varying (100);
+v_first_ch15 character varying (100);
+v_first_ch16 character varying (100);
+v_first_ch17 character varying (100);
+v_first_ch18 character varying (100);
+v_first_ch19 character varying (100);
+v_first_ch20 character varying (100);
+--
+v_first_ch21 character varying (100);
+v_first_ch22 character varying (100);
+v_first_ch23 character varying (100);
+v_first_ch24 character varying (100);
+v_first_ch25 character varying (100);
+v_first_ch26 character varying (100);
+v_first_ch27 character varying (100);
+v_first_ch28 character varying (100);
+v_first_ch29 character varying (100);
+v_first_ch30 character varying (100);
+v_first_ch31 character varying (100);
+v_first_ch32 character varying (100);
+v_first_ch33 character varying (100);
+v_first_ch34 character varying (100);
+v_first_ch35 character varying (100);
+v_first_ch36 character varying (100);
+v_first_ch37 character varying (100);
+v_first_ch38 character varying (100);
+v_first_ch39 character varying (100);
+v_first_ch40 character varying (100);
+--
+v_first_ch41 character varying (100);
+v_first_ch42 character varying (100);
+v_first_ch43 character varying (100);
+v_first_ch44 character varying (100);
+v_first_ch45 character varying (100);
+v_first_ch46 character varying (100);
+v_first_ch47 character varying (100);
+v_first_ch48 character varying (100);
+v_first_ch49 character varying (100);
+v_first_ch50 character varying (100);
+v_first_ch51 character varying (100);
+v_first_ch52 character varying (100);
+v_first_ch53 character varying (100);
+v_first_ch54 character varying (100);
+v_first_ch55 character varying (100);
+v_first_ch56 character varying (100);
+v_first_ch57 character varying (100);
+v_first_ch58 character varying (100);
+v_first_ch59 character varying (100);
+v_first_ch60 character varying (100);
+
+v_nom_voie 		 character varying (100);
+v_first_nom_voie character varying (100);
+v_lettre_voie	 character varying (2);
+v_first_lettre_voie	character varying (2);
+v_column_name_1	 character varying (100);
+v_column_name_2	 character varying (100);
+
+v_chaine_column_name    			text;
+v_chaine_valeur_calc 				text;
+v_first_chaine_column_name    		text;
+v_first_chaine_valeur_calc 			text;
+v_first_chaine_valeur_calc_k_100 	text;
+v_first_chaine_valeur_calc_k_0 		text;
+
+v_libelle_evenement character varying (100);
+v_first_libelle_evenement character varying (100);
+v_libelle_evenement_K100 character varying (100):='Modif 0 %';
+v_libelle_evenement_K0 character varying (100):='Modif 100 %';
+v_libelle_evenement_erreur character varying (100):='Défaut format';
+v_libelle_evenement_table character varying (100):='';
+
+v_lettre	character varying (2);
+
+v_valeur	character varying (100);
+v_nombre    integer;
+v_seul    	integer;
+
+c_compte_nb_ch_chaine_champ integer;
+c_compte_nb_ch_chaine_valeur integer;
+
+v_val_calc character varying (100);
+
+table_log_archivage character varying (100):='sh_pd.archives_releves_log';
+
+i integer:=1;
+j integer:=1;
+
+ligne_to_insert integer:=0;
+ 
+compteur_ligne_insert integer:=1;
+nombre_ligne integer:=0;
+v_nombre_ligne integer:=0;
+v_count	integer:=0;
+
+CurRelEvAnaK CURSOR
+FOR SELECT 	distinct COALESCE(r.fichier,'') as fichier, COALESCE(r.time,'') as time,
+								COALESCE(r.ordre,-99999) as ordre,COALESCE(r.evenement,'') as evenement ,
+                                COALESCE(t.nom_voie,'') as nom_voie ,COALESCE(t.lettre_voie,'') as lettre_voie,
+								public.transforme_valeur_mesure_K(r.ch2,t.precision) as ch2,public.transforme_valeur_mesure_K(r.ch3,t.precision) as ch3,
+								public.transforme_valeur_mesure_K(r.ch4,t.precision) as ch4,public.transforme_valeur_mesure_K(r.ch5,t.precision) as ch5,
+								public.transforme_valeur_mesure_K(r.ch6,t.precision) as ch6,public.transforme_valeur_mesure_K(r.ch7,t.precision) as ch7,
+								public.transforme_valeur_mesure_K(r.ch8,t.precision) as ch8,public.transforme_valeur_mesure_K(r.ch9,t.precision) as ch9,
+								public.transforme_valeur_mesure_K(r.ch10,t.precision) as ch10,public.transforme_valeur_mesure_K(r.ch11,t.precision) as ch11,
+								public.transforme_valeur_mesure_K(r.ch12,t.precision) as ch12,public.transforme_valeur_mesure_K(r.ch13,t.precision) as ch13,
+								public.transforme_valeur_mesure_K(r.ch14,t.precision) as ch14,public.transforme_valeur_mesure_K(r.ch15,t.precision) as ch15,
+								public.transforme_valeur_mesure_K(r.ch16,t.precision) as ch16,public.transforme_valeur_mesure_K(r.ch17,t.precision) as ch17,
+								public.transforme_valeur_mesure_K(r.ch18,t.precision) as ch18,public.transforme_valeur_mesure_K(r.ch19,t.precision) as ch19,
+								public.transforme_valeur_mesure_K(r.ch20,t.precision) as ch20,public.transforme_valeur_mesure_K(r.ch21,t.precision) as ch21,
+								public.transforme_valeur_mesure_K(r.ch22,t.precision) as ch22,public.transforme_valeur_mesure_K(r.ch23,t.precision) as ch23,
+								public.transforme_valeur_mesure_K(r.ch24,t.precision) as ch24,public.transforme_valeur_mesure_K(r.ch25,t.precision) as ch25,
+								public.transforme_valeur_mesure_K(r.ch26,t.precision) as ch26,public.transforme_valeur_mesure_K(r.ch27,t.precision) as ch27,
+								public.transforme_valeur_mesure_K(r.ch28,t.precision) as ch28,public.transforme_valeur_mesure_K(r.ch29,t.precision) as ch29,
+								public.transforme_valeur_mesure_K(r.ch30,t.precision) as ch30,public.transforme_valeur_mesure_K(r.ch31,t.precision) as ch31,
+								public.transforme_valeur_mesure_K(r.ch32,t.precision) as ch32,public.transforme_valeur_mesure_K(r.ch33,t.precision) as ch33,
+								public.transforme_valeur_mesure_K(r.ch34,t.precision) as ch34,public.transforme_valeur_mesure_K(r.ch35,t.precision) as ch35,
+								public.transforme_valeur_mesure_K(r.ch36,t.precision) as ch36,public.transforme_valeur_mesure_K(r.ch37,t.precision) as ch37,
+								public.transforme_valeur_mesure_K(r.ch38,t.precision) as ch38,public.transforme_valeur_mesure_K(r.ch39,t.precision) as ch39,
+								public.transforme_valeur_mesure_K(r.ch40,t.precision) as ch40,public.transforme_valeur_mesure_K(r.ch41,t.precision) as ch41,
+								public.transforme_valeur_mesure_K(r.ch42,t.precision) as ch42,public.transforme_valeur_mesure_K(r.ch43,t.precision) as ch43,
+								public.transforme_valeur_mesure_K(r.ch44,t.precision) as ch44,public.transforme_valeur_mesure_K(r.ch45,t.precision) as ch45,
+								public.transforme_valeur_mesure_K(r.ch46,t.precision) as ch46,public.transforme_valeur_mesure_K(r.ch47,t.precision) as ch47,
+								public.transforme_valeur_mesure_K(r.ch48,t.precision) as ch48,public.transforme_valeur_mesure_K(r.ch49,t.precision) as ch49,
+								public.transforme_valeur_mesure_K(r.ch50,t.precision) as ch50,public.transforme_valeur_mesure_K(r.ch51,t.precision) as ch51,
+								public.transforme_valeur_mesure_K(r.ch52,t.precision) as ch52,public.transforme_valeur_mesure_K(r.ch53,t.precision) as ch53,
+								public.transforme_valeur_mesure_K(r.ch54,t.precision) as ch54,public.transforme_valeur_mesure_K(r.ch55,t.precision) as ch55,
+								public.transforme_valeur_mesure_K(r.ch56,t.precision) as ch56,public.transforme_valeur_mesure_K(r.ch57,t.precision) as ch57,
+								public.transforme_valeur_mesure_K(r.ch58,t.precision) as ch58,public.transforme_valeur_mesure_K(r.ch59,t.precision) as ch59,
+								public.transforme_valeur_mesure_K(r.ch60,t.precision) as ch60
+					   FROM 	sh_pd.tmp_load_file_jour_releves_voie_ana a, sh_pd.tmp_load_file_jour_releves r,
+								sh_pd.tmp_load_file_jour_releves_voie_ana_archive t
+					   where 	a.fichier=r.fichier and a.lettre_voie=t.lettre_voie
+	                   and 		a.nom_voie=substr(t.nom_voie,1,position('____' in t.nom_voie)-1)
+					   and      a.precision=t.precision
+				       and   (
+	                           (r.ch2 is not null and substr(r.ch2,1,2)=a.lettre_voie)
+	                               or
+	                           (r.ch3 is not null and substr(r.ch3,1,2)=a.lettre_voie)	
+									or
+							   (r.ch4 is not null and substr(r.ch4,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch5 is not null and substr(r.ch5,1,2)=a.lettre_voie)
+							        or
+	                           (r.ch6 is not null and substr(r.ch6,1,2)=a.lettre_voie)
+									or
+	                           (r.ch7 is not null and substr(r.ch7,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch8 is not null and substr(r.ch8,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch9 is not null and substr(r.ch9,1,2)=a.lettre_voie)     
+									or
+	                           (r.ch10 is not null and substr(r.ch10,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch11 is not null and substr(r.ch11,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch12 is not null and substr(r.ch12,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch13 is not null and substr(r.ch13,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch14 is not null and substr(r.ch14,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch15 is not null and substr(r.ch15,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch16 is not null and substr(r.ch16,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch17 is not null and substr(r.ch17,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch18 is not null and substr(r.ch18,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch19 is not null and substr(r.ch19,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch20 is not null and substr(r.ch20,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch21 is not null and substr(r.ch21,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch22 is not null and substr(r.ch22,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch23 is not null and substr(r.ch23,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch24 is not null and substr(r.ch24,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch25 is not null and substr(r.ch25,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch26 is not null and substr(r.ch26,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch27 is not null and substr(r.ch27,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch28 is not null and substr(r.ch28,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch29 is not null and substr(r.ch29,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch30 is not null and substr(r.ch30,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch31 is not null and substr(r.ch31,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch32 is not null and substr(r.ch32,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch33 is not null and substr(r.ch33,1,2)=a.lettre_voie)
+                                    or
+							   (r.ch34 is not null and substr(r.ch34,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch35 is not null and substr(r.ch35,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch36 is not null and substr(r.ch36,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch37 is not null and substr(r.ch37,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch38 is not null and substr(r.ch38,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch39 is not null and substr(r.ch39,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch40 is not null and substr(r.ch40,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch41 is not null and substr(r.ch41,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch42 is not null and substr(r.ch42,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch43 is not null and substr(r.ch43,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch44 is not null and substr(r.ch44,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch45 is not null and substr(r.ch45,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch46 is not null and substr(r.ch46,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch47 is not null and substr(r.ch47,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch48 is not null and substr(r.ch48,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch49 is not null and substr(r.ch49,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch50 is not null and substr(r.ch50,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch51 is not null and substr(r.ch51,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch52 is not null and substr(r.ch52,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch53 is not null and substr(r.ch53,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch54 is not null and substr(r.ch54,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch55 is not null and substr(r.ch55,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch56 is not null and substr(r.ch56,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch57 is not null and substr(r.ch57,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch58 is not null and substr(r.ch58,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch59 is not null and substr(r.ch59,1,2)=a.lettre_voie)
+                                    or
+	                           (r.ch60 is not null and substr(r.ch60,1,2)=a.lettre_voie)
+	                         )
+					   and   r.evenement in ('K') ORDER BY time asc,ordre asc,lettre_voie asc, nom_voie asc;
+					   
+BEGIN
+
+v_first_chaine_column_name:='';
+v_first_chaine_valeur_calc:='';
+ligne_to_insert:=0;
+
+c_compte_nb_ch_chaine_champ:=0;
+c_compte_nb_ch_chaine_valeur:=0;
+
+OPEN CurRelEvAnaK;
+FETCH FIRST FROM CurRelEvAnaK INTO    v_first_fichier,v_first_time,v_first_ordre,v_first_evenement,v_first_nom_voie,v_first_lettre_voie,v_first_ch2,v_first_ch3,v_first_ch4,v_first_ch5,v_first_ch6,v_first_ch7,v_first_ch8,v_first_ch9,v_first_ch10,v_first_ch11,v_first_ch12,v_first_ch13,v_first_ch14,
+									  v_first_ch15,v_first_ch16,v_first_ch17,v_first_ch18,v_first_ch19,v_first_ch20,v_first_ch21,v_first_ch22,v_first_ch23,v_first_ch24,v_first_ch25,v_first_ch26,v_first_ch27,v_first_ch28,v_first_ch29,v_first_ch30,
+									  v_first_ch31,v_first_ch32,v_first_ch33,v_first_ch34,v_first_ch35,v_first_ch36,v_first_ch37,v_first_ch38,v_first_ch39,v_first_ch40,v_first_ch41,v_first_ch42,v_first_ch43,v_first_ch44,v_first_ch45,v_first_ch46,
+									  v_first_ch47,v_first_ch48,v_first_ch49,v_first_ch50,v_first_ch51,v_first_ch52,v_first_ch53,v_first_ch54,v_first_ch55,v_first_ch56,v_first_ch57,v_first_ch58,v_first_ch59,v_first_ch60;
+
+	v_first_chaine_column_name:=v_first_nom_voie;
+
+	if NULLIF(v_first_ch2,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch3,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch4,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch5,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch6,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch7,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch8,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch9,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch10,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch11,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch12,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch13,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch14,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch15,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch16,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch17,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch18,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch19,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch20,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch21,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch22,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch23,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch24,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch25,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch26,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch27,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch28,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch29,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch30,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch31,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch32,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch33,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch34,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch35,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch36,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch37,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch38,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch39,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch40,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch41,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch42,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch43,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch44,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch45,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch46,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch47,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch48,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch49,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch50,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch51,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch52,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch53,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch54,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch55,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch56,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch57,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch58,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch59,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	if NULLIF(v_first_ch60,'') is not null
+	then
+		c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+	end if;
+	
+	v_first_chaine_valeur_calc:=v_first_ch2||v_first_ch3||v_first_ch4||v_first_ch5||v_first_ch6||v_first_ch7||v_first_ch8||v_first_ch9||v_first_ch10||v_first_ch11||v_first_ch12||v_first_ch13||
+								v_first_ch14||v_first_ch15||v_first_ch16||v_first_ch17||v_first_ch18||v_first_ch19||v_first_ch20||v_first_ch21||v_first_ch22||v_first_ch23||v_first_ch24||
+								v_first_ch25||v_first_ch26||v_first_ch27||v_first_ch28||v_first_ch29||v_first_ch30||v_first_ch31||v_first_ch32||v_first_ch33||v_first_ch34||v_first_ch35||
+								v_first_ch36||v_first_ch37||v_first_ch38||v_first_ch39||v_first_ch40||v_first_ch41||v_first_ch42||v_first_ch43||v_first_ch44||v_first_ch45||v_first_ch46||
+								v_first_ch47||v_first_ch48||v_first_ch49||v_first_ch50||v_first_ch51||v_first_ch52||v_first_ch53||v_first_ch54||v_first_ch55||v_first_ch56||v_first_ch57||
+								v_first_ch58||v_first_ch59||v_first_ch60;
+						  
+	RAISE NOTICE 'v_column_name %-%',v_first_chaine_valeur_calc,v_first_ch2;
+	
+v_chaine_column_name:=v_first_chaine_column_name;
+v_chaine_valeur_calc:='';
+ligne_to_insert:=0;
+c_compte_nb_ch_chaine_champ:=1;
+ 
+LOOP
+EXIT WHEN NOT FOUND;
+FETCH NEXT FROM CurRelEvAnaK INTO   v_fichier,v_time,v_ordre,v_evenement,v_nom_voie,v_lettre_voie,v_ch2,v_ch3,v_ch4,v_ch5,v_ch6,v_ch7,v_ch8,v_ch9,v_ch10,v_ch11,v_ch12,v_ch13,v_ch14,
+									v_ch15,v_ch16,v_ch17,v_ch18,v_ch19,v_ch20,v_ch21,v_ch22,v_ch23,v_ch24,v_ch25,v_ch26,v_ch27,v_ch28,v_ch29,v_ch30,
+									v_ch31,v_ch32,v_ch33,v_ch34,v_ch35,v_ch36,v_ch37,v_ch38,v_ch39,v_ch40,v_ch41,v_ch42,v_ch43,v_ch44,v_ch45,v_ch46,
+									v_ch47,v_ch48,v_ch49,v_ch50,v_ch51,v_ch52,v_ch53,v_ch54,v_ch55,v_ch56,v_ch57,v_ch58,v_ch59,v_ch60;
+
+--if i > 10000 then exit; end if;
+if j > 100000 then j:=1; RAISE NOTICE '100000 lignes inserees %',now(); j:=1; end if;
+
+	if v_time = v_first_time and v_ordre = v_first_ordre and v_evenement=v_first_evenement and v_fichier=v_first_fichier
+	then
+			if POSITION(v_nom_voie IN v_first_chaine_column_name)=0
+			then
+				v_first_chaine_column_name:=v_first_chaine_column_name||','||v_nom_voie;
+				ligne_to_insert:=0;
+				c_compte_nb_ch_chaine_champ:=c_compte_nb_ch_chaine_champ+1;
+			else
+				
+				v_execute_1:='Erreur de doublon de colonne : v_time='||COALESCE(v_first_time,'NULL')||'-v_first_evenement='||COALESCE(v_first_evenement,'NULL')||'-v_nom_voie='||COALESCE(v_first_nom_voie,'NULL')
+				             ||'-v_lettre_voie='||COALESCE(v_first_lettre_voie,'NULL');
+				v_execute_1:=v_execute_1||'-v_ch2='||v_ch2||'-v_ch3='||COALESCE(v_ch3,'NULL')||'-v_ch4='||COALESCE(v_ch4,'NULL')||'-v_ch5='||COALESCE(v_ch5,'NULL')||
+							'-v_ch6='||COALESCE(v_ch6,'NULL')||'-v_ch7='||COALESCE(v_ch7,'NULL')||'-v_ch8='||COALESCE(v_ch8,'NULL')||'-v_ch9='||COALESCE(v_ch9,'NULL')||
+							'-v_ch10='||COALESCE(v_ch10,'NULL')||'-v_ch11='||COALESCE(v_ch11,'NULL')||'-v_ch12='||COALESCE(v_ch12,'NULL')||'-v_ch13='||COALESCE(v_ch13,'NULL')||
+							'-v_ch14='||COALESCE(v_ch14,'NULL')||'-v_ch15='||COALESCE(v_ch15,'NULL')||'-v_ch16='||COALESCE(v_ch16,'NULL')||'-v_ch17='||COALESCE(v_ch17,'NULL')||
+							'-v_ch18='||COALESCE(v_ch18,'NULL')||'-v_ch19='||COALESCE(v_ch19,'NULL')||'-v_ch20='||COALESCE(v_ch20,'NULL')||'-v_ch21='||COALESCE(v_ch21,'NULL')||
+							'-v_ch22='||COALESCE(v_ch22,'NULL')||'-v_ch23='||COALESCE(v_ch23,'NULL')||'-v_ch24='||COALESCE(v_ch24,'NULL')||'-v_ch25='||COALESCE(v_ch25,'NULL')||
+							'-v_ch26='||COALESCE(v_ch26,'NULL')||'-v_ch27='||COALESCE(v_ch27,'NULL')||'-v_ch28='||COALESCE(v_ch28,'NULL')||'-v_ch29='||COALESCE(v_ch29,'NULL')||
+							'-v_ch30='||COALESCE(v_ch30,'NULL')||'-v_ch31='||COALESCE(v_ch31,'NULL')||'-v_ch32='||COALESCE(v_ch32,'NULL')||'-v_ch33='||COALESCE(v_ch33,'NULL')||
+							'-v_ch34='||COALESCE(v_ch34,'NULL')||'-v_ch35='||COALESCE(v_ch35,'NULL')||'-v_ch36='||COALESCE(v_ch36,'NULL')||'-v_ch37='||COALESCE(v_ch37,'NULL')||
+							'-v_ch38='||COALESCE(v_ch38,'NULL')||'-v_ch39='||COALESCE(v_ch39,'NULL')||'-v_ch40='||COALESCE(v_ch40,'NULL')||'-v_ch41='||COALESCE(v_ch41,'NULL')||
+							'-v_ch42='||COALESCE(v_ch42,'NULL')||'-v_ch43='||COALESCE(v_ch43,'NULL')||'-v_ch44='||COALESCE(v_ch44,'NULL')||'-v_ch45='||COALESCE(v_ch45,'NULL')||
+							'-v_ch46='||COALESCE(v_ch46,'NULL')||'-v_ch47='||COALESCE(v_ch47,'NULL')||'-v_ch48='||COALESCE(v_ch48,'NULL')||'-v_ch49='||COALESCE(v_ch49,'NULL')||
+							'-v_ch50='||COALESCE(v_ch50,'NULL')||'-v_ch51='||COALESCE(v_ch51,'NULL')||'-v_ch52='||COALESCE(v_ch52,'NULL')||'-v_ch53='||COALESCE(v_ch53,'NULL')||
+							'-v_ch54='||COALESCE(v_ch54,'NULL')||'-v_ch55='||COALESCE(v_ch55,'NULL')||'-v_ch56='||COALESCE(v_ch56,'NULL')||'-v_ch57='||COALESCE(v_ch57,'NULL')||
+							'-v_ch58='||COALESCE(v_ch58,'NULL')||'-v_ch59='||COALESCE(v_ch59,'NULL')||'-v_ch60='||COALESCE(v_ch60,'NULL');
+
+
+				--RAISE NOTICE 'Erreur de doublonc de colonne : v_first_chaine_column_name=%-v_nom_voie=%-v_first_chaine_valeur_calc=%-v_execute_1=%',v_first_chaine_column_name,v_nom_voie,v_first_chaine_valeur_calc,v_execute_1;
+				v_first_fichier:=COALESCE(v_first_fichier,'NULL');
+				v_execute_2:='insert into ' ||table_log_archivage||' values('||''''||v_first_fichier||''''||','||''''||replace(v_execute_1,'''','')||''''||')';
+				BEGIN
+				--RAISE NOTICE 'commande = %',v_execute_1;		
+				EXECUTE v_execute_2;
+				EXCEPTION
+				WHEN OTHERS THEN message_retour:='NOK233';-- RAISE NOTICE 'ERREUR233 dans %',v_execute_2;message_retour:='NOK233';
+				--WHEN OTHERS THEN CONTINUE;
+				END;
+				ligne_to_insert:=1;
+			end if;
+			
+	else
+		
+			ligne_to_insert:=1;
+			
+	end if;
+			
+	if ligne_to_insert != 0
+    then	
+			v_libelle_evenement:='Modif 100% et/ou 0%';
+			v_execute_K_100:='';
+			v_execute_K_0:='';
+			
+			IF POSITION('ERREUR#' in v_first_chaine_valeur_calc) = 0
+			THEN
+			
+					v_first_chaine_valeur_calc_k_100:=public.hash_evenement_K(v_first_chaine_valeur_calc);
+					
+					RAISE NOTICE 'v_first_chaine_valeur_calc=%-v_first_chaine_valeur_calc_k_100=%',v_first_chaine_valeur_calc,v_first_chaine_valeur_calc_k_100;
+					
+					if POSITION(';K;' in v_first_chaine_valeur_calc_k_100) != 0
+					then
+							if POSITION(';k;' in v_first_chaine_valeur_calc_k_100) != 0
+							then
+							
+								v_first_chaine_valeur_calc_k_100:=substr(v_first_chaine_valeur_calc_k_100,4,POSITION(';k;' in v_first_chaine_valeur_calc_k_100)-4);
+							
+							else
+								
+								v_first_chaine_valeur_calc_k_100:=substr(v_first_chaine_valeur_calc_k_100,4,length(v_first_chaine_valeur_calc_k_100)-4+1);
+								
+							end if;
+							
+					else
+							v_first_chaine_valeur_calc_k_100:='';
+					end if;
+					
+					v_first_chaine_valeur_calc_k_0:=public.hash_evenement_K(v_first_chaine_valeur_calc);
+					
+					RAISE NOTICE 'v_first_chaine_valeur_calc=%-v_first_chaine_valeur_calc_k_0=%',v_first_chaine_valeur_calc,v_first_chaine_valeur_calc_k_0;
+					
+					if POSITION(';k;' in v_first_chaine_valeur_calc_k_0) != 0
+					then
+							if POSITION(';K;' in v_first_chaine_valeur_calc_k_0) != 0
+							then
+							
+								v_first_chaine_valeur_calc_k_0:=substr(v_first_chaine_valeur_calc_k_0,POSITION(';k;' in v_first_chaine_valeur_calc_k_0)+3,length(v_first_chaine_valeur_calc_k_0)-POSITION(';k;' in v_first_chaine_valeur_calc_k_0)-2);
+							   
+							else
+								
+								v_first_chaine_valeur_calc_k_0:=substr(v_first_chaine_valeur_calc_k_0,4,length(v_first_chaine_valeur_calc_k_0)-4+1);
+								
+							end if;
+							
+					else
+							v_first_chaine_valeur_calc_k_0:='';
+					end if;
+
+				
+					v_libelle_evenement_table:='';
+					
+					if v_first_chaine_valeur_calc_k_100 != ''
+					then
+					
+						select case WHEN v_first_chaine_valeur_calc_k_100 ~* '[A-F]' THEN v_libelle_evenement_erreur||' '||v_libelle_evenement_K100 else v_libelle_evenement_K100 end into v_libelle_evenement_table;
+							
+						v_execute_K_100:='insert into sh_'||lower(station)||'.archives_releves (time,evenement,libelle_evenement,'||v_first_chaine_column_name||')'||
+										 ' values('||''''||v_first_time||''''||','||''''||'K'||''''||','||''''||v_libelle_evenement_table||''''||','||v_first_chaine_valeur_calc_k_100||')';
+										
+						RAISE NOTICE 'v_execute_K_100=%',v_execute_K_100;
+						
+					end if;
+					
+					if v_first_chaine_valeur_calc_k_0 != ''
+					then
+					
+						select case WHEN v_first_chaine_valeur_calc_k_0 ~* '[A-F]' THEN v_libelle_evenement_erreur||' '||v_libelle_evenement_K0 else v_libelle_evenement_K0 end into v_libelle_evenement_table;
+					
+						v_execute_K_0:='insert into sh_'||lower(station)||'.archives_releves (time,evenement,libelle_evenement,'||v_first_chaine_column_name||')'||
+									   ' values('||''''||v_first_time||''''||','||''''||'k'||''''||','||''''||v_libelle_evenement_table||''''||','||v_first_chaine_valeur_calc_k_0||')';
+					
+						RAISE NOTICE 'v_execute_K_0=%',v_execute_K_0;
+						
+					end if;
+					
+					RAISE NOTICE 'c_compte_nb_ch_chaine_champ=%-c_compte_nb_ch_chaine_valeur/2=%',c_compte_nb_ch_chaine_champ,c_compte_nb_ch_chaine_valeur/2;
+					
+					IF NULLIF(v_first_chaine_column_name,'') IS NOT NULL and NULLIF(v_first_chaine_valeur_calc,'') IS NOT NULL 
+					and NULLIF(v_first_time,'') IS NOT NULL and NULLIF(v_evenement,'') IS NOT NULL and v_first_chaine_valeur_calc_k_0 != ''
+					and c_compte_nb_ch_chaine_champ=c_compte_nb_ch_chaine_valeur/2
+					THEN
+						i:=i+1;
+						j:=j+1;
+						BEGIN
+						--RAISE NOTICE 'commande = %',v_execute_K_0;		
+						EXECUTE v_execute_K_0;
+						EXCEPTION
+						WHEN OTHERS THEN RAISE NOTICE 'ERREUR22b dans %',v_execute_K_0;message_retour:='NOK22';
+						--WHEN OTHERS THEN CONTINUE;
+						END;
+					ELSE
+						i:=i+1;
+						--RAISE NOTICE 'PB chaine cmd=%',v_execute_1;
+						v_execute_1:='insert v_first_chaine_valeur_calc_k_0 into sh_'||COALESCE(lower(station),'NULL')||'.archives_releves (time,evenement,libelle_evenement,'||COALESCE(v_first_chaine_column_name,'NULL')||')'||
+									 ' values('||''''||COALESCE(v_first_time,'NULL')||''''||','||''''||COALESCE(v_evenement,'NULL')||''''||','||''''||COALESCE(v_libelle_evenement,'NULL')||''''||','||''''||
+									 COALESCE(v_first_chaine_valeur_calc_k_0,'NULL')||''''||')';
+						v_first_fichier:=COALESCE(v_first_fichier,'NULL');							 
+						v_execute_2:='insert into ' ||table_log_archivage||' values('||''''||v_first_fichier||''''||','||''''||replace(v_execute_1,'''','')||''''||')';
+						BEGIN
+						--RAISE NOTICE 'commande = %',v_execute_1;		
+						EXECUTE v_execute_2;
+						EXCEPTION
+						WHEN OTHERS THEN message_retour:='NOK23a'; RAISE NOTICE 'ERREUR23b fichier % dans % - v_execute_1 %',v_first_fichier,v_execute_2,v_execute_1;message_retour:='NOK23';
+						--WHEN OTHERS THEN CONTINUE;
+						END;
+					END IF;
+					
+					IF NULLIF(v_first_chaine_column_name,'') IS NOT NULL and NULLIF(v_first_chaine_valeur_calc,'') IS NOT NULL 
+					and NULLIF(v_first_time,'') IS NOT NULL and NULLIF(v_evenement,'') IS NOT NULL and v_first_chaine_valeur_calc_k_100 != ''
+					and c_compte_nb_ch_chaine_champ=c_compte_nb_ch_chaine_valeur/2
+					THEN
+						i:=i+1;
+						j:=j+1;
+						BEGIN
+						--RAISE NOTICE 'commande = %',v_execute_K_100;		
+						EXECUTE v_execute_K_100;
+						EXCEPTION
+						WHEN OTHERS THEN RAISE NOTICE 'ERREUR22a dans %',v_execute_K_100;message_retour:='NOK22';
+						--WHEN OTHERS THEN CONTINUE;
+						END;
+					ELSE
+						i:=i+1;
+						--RAISE NOTICE 'PB chaine cmd=%',v_execute_1;
+						v_execute_1:='Erreur v_first_chaine_valeur_calc_k_100 insert into sh_'||COALESCE(lower(station),'NULL')||'.archives_releves (time,evenement,libelle_evenement,'||COALESCE(v_first_chaine_column_name,'NULL')||')'||
+									 ' values('||''''||COALESCE(v_first_time,'NULL')||''''||','||''''||COALESCE(v_evenement,'NULL')||''''||','||''''||COALESCE(v_libelle_evenement,'NULL')||''''||','||''''||
+									 COALESCE(v_first_chaine_valeur_calc_k_100,'NULL')||''''||')';
+						v_first_fichier:=COALESCE(v_first_fichier,'NULL');							 
+						v_execute_2:='insert into ' ||table_log_archivage||' values('||''''||v_first_fichier||''''||','||''''||replace(v_execute_1,'''','')||''''||')';
+						BEGIN
+						--RAISE NOTICE 'commande = %',v_execute_1;		
+						EXECUTE v_execute_2;
+						EXCEPTION
+						WHEN OTHERS THEN message_retour:='NOK23'; RAISE NOTICE 'ERREUR23a fichier % dans % - v_execute_1 %',v_first_fichier,v_execute_2,v_execute_1;message_retour:='NOK23';
+						--WHEN OTHERS THEN CONTINUE;
+						END;
+					END IF;
+	
+			ELSE
+					i:=i+1;
+						--RAISE NOTICE 'PB chaine cmd=%',v_execute_1;
+					v_execute_1:='ERREUR# insert into sh_'||COALESCE(lower(station),'NULL')||'.archives_releves (time,evenement,libelle_evenement,'||COALESCE(v_first_chaine_column_name,'NULL')||')'||
+								 ' values('||''''||COALESCE(v_first_time,'NULL')||''''||','||''''||COALESCE(v_evenement,'NULL')||''''||','||''''||COALESCE(v_libelle_evenement,'NULL')||''''||','||''''||
+								  COALESCE(v_first_chaine_valeur_calc,'NULL')||''''||')';
+					v_first_fichier:=COALESCE(v_first_fichier,'NULL');
+                    --RAISE NOTICE 'Cas FFFF : %-%',v_execute_1,v_first_chaine_valeur_calc;					
+					v_execute_2:='insert into ' ||table_log_archivage||' values('||''''||v_first_fichier||''''||','||''''||replace(v_execute_1,'''','')||''''||')';
+					BEGIN
+						--RAISE NOTICE 'commande = %',v_execute_1;		
+					EXECUTE v_execute_2;
+					EXCEPTION
+					WHEN OTHERS THEN message_retour:='NOK23b'; RAISE NOTICE 'ERREUR23 fichier % dans % - v_execute_1 %',v_first_fichier,v_execute_2,v_execute_1;message_retour:='NOK23';
+						--WHEN OTHERS THEN CONTINUE;
+					END;
+						
+			END IF;
+	
+			v_first_time:=v_time;
+			v_first_chaine_column_name:=v_nom_voie;
+			
+			v_first_ordre:=v_ordre;
+			v_first_evenement:=v_evenement;
+			v_first_libelle_evenement:=v_libelle_evenement;
+			
+			v_first_fichier:=v_fichier;
+			v_first_nom_voie:=v_nom_voie;
+			v_first_lettre_voie:=v_lettre_voie;
+			
+			c_compte_nb_ch_chaine_valeur:=0;
+			c_compte_nb_ch_chaine_champ:=1;
+			
+			if NULLIF(v_ch2,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch3,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch4,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch5,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch6,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch7,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch8,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch9,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch10,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch11,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch12,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch13,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch14,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch15,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch16,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch17,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch18,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch19,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch20,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch21,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch22,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch23,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch24,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch25,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch26,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch27,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch28,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch29,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch30,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch31,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch32,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch33,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch34,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch35,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch36,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch37,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch38,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch39,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch40,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch41,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch42,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch43,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch44,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch45,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch46,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch47,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch48,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch49,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch50,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch51,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch52,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch53,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch54,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch55,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch56,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch57,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch58,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch59,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+			if NULLIF(v_ch60,'') is not null
+			then
+				c_compte_nb_ch_chaine_valeur:=c_compte_nb_ch_chaine_valeur+1;
+			end if;
+	
+										
+			v_first_chaine_valeur_calc:=v_ch2||v_ch3||v_ch4||v_ch5||v_ch6||v_ch7||v_ch8||v_ch9||v_ch10||v_ch11||v_ch12||v_ch13||
+										v_ch14||v_ch15||v_ch16||v_ch17||v_ch18||v_ch19||v_ch20||v_ch21||v_ch22||v_ch23||v_ch24||
+										v_ch25||v_ch26||v_ch27||v_ch28||v_ch29||v_ch30||v_ch31||v_ch32||v_ch33||v_ch34||v_ch35||
+										v_ch36||v_ch37||v_ch38||v_ch39||v_ch40||v_ch41||v_ch42||v_ch43||v_ch44||v_ch45||v_ch46||
+										v_ch47||v_ch48||v_ch49||v_ch50||v_ch51||v_ch52||v_ch53||v_ch54||v_ch55||v_ch56||v_ch57||
+										v_ch58||v_ch59||v_ch60;
+								  
+						
+	end if;						  
+	
+	
+END LOOP;
+CLOSE CurRelEvAnaK;
+
+return message_retour;
+
+--EXCEPTION
+
+--WHEN OTHERS THEN message_retour:='GLOBALNOK';return message_retour;
+
+END
+$BODY$;

@@ -1,0 +1,36 @@
+select distinct case a.lettre_voie
+								when 'a' then ascii(a.lettre_voie)
+								when 'b' then ascii(a.lettre_voie)
+								when 'c' then ascii(a.lettre_voie)
+								when 'd' then ascii(a.lettre_voie)
+								when 'e' then ascii(a.lettre_voie)
+								when 'f' then ascii(a.lettre_voie)
+								when 'g' then ascii(a.lettre_voie)
+								when 'h' then ascii(a.lettre_voie)
+								when 'i' then ascii(a.lettre_voie)
+								when 'j' then ascii(a.lettre_voie)
+								when 'k' then ascii(a.lettre_voie)
+								when 'l' then ascii(a.lettre_voie)
+								when 'm' then ascii(a.lettre_voie)
+								when 'n' then ascii(a.lettre_voie)
+								when 'o' then ascii(a.lettre_voie)
+								when 'p' then ascii(a.lettre_voie)
+								when 'q' then ascii(a.lettre_voie)
+								when 'r' then ascii(a.lettre_voie)
+								when 's' then ascii(a.lettre_voie)
+								when 't' then ascii(a.lettre_voie)
+								when 'u' then ascii(a.lettre_voie)
+								when 'v' then ascii(a.lettre_voie)
+								when 'w' then ascii(a.lettre_voie)
+								when 'x' then ascii(a.lettre_voie)
+								when 'y' then ascii(a.lettre_voie)
+								when 'z' then ascii(a.lettre_voie)
+								when '(' then 123
+								when ')' then 124
+								when '[' then 125
+								when ']' then 126
+								when '{' then 127
+								when '}' then 128
+						   end as ordre,
+	   a.lettre_voie,a.nom_voie,a.precision::smallint
+	   from sh_pd.tmp_load_file_jour_releves_voie_ana a order by ordre asc;

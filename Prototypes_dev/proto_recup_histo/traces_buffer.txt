@@ -1,0 +1,309 @@
+NOTICE:  DROP TABLE table_temporaire_entetes_insert
+NOTICE:  CREATE TEMPORARY TABLE table_temporaire_entetes_insert(ordre integer,
+																		lettre_voie character varying (2),
+																		nom_voie character varying (100),
+																		precision smallint
+																	  )
+NOTICE:  DROP TABLE table_temporaire_entetes
+NOTICE:  CREATE TEMPORARY TABLE table_temporaire_entetes(ordre integer,
+																 lettre_voie character varying (2),
+																 nom_voie character varying (100),
+																 precision smallint
+														         )
+NOTICE:  DROP TABLE sh_pd.archives_releves
+NOTICE:  CREATE TABLE sh_pd.archives_releves(time 				timestamp without time zone,
+													 evenement 			character varying(10),
+													 libelle_evenement   character varying(100)
+													)
+NOTICE:  DROP INDEX sh_pd_ind_table_archivage_1
+NOTICE:  Erreur dans DROP INDEX sh_pd_ind_table_archivage_1
+NOTICE:  CREATE INDEX sh_pd_ind_table_archivage_1
+    ON sh_pd.archives_releves USING btree
+    (time, evenement COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default
+NOTICE:  DROP INDEX sh_pd_ind_table_archivage_2
+NOTICE:  Erreur dans DROP INDEX sh_pd_ind_table_archivage_2
+NOTICE:  CREATE INDEX sh_pd_ind_table_archivage_2
+    ON sh_pd.archives_releves USING btree
+    (time)
+    TABLESPACE pg_default
+NOTICE:  INSERT INTO table_temporaire_entetes select distinct case a.lettre_voie
+								when 'a' then ascii(a.lettre_voie)
+								when 'b' then ascii(a.lettre_voie)
+								when 'c' then ascii(a.lettre_voie)
+								when 'd' then ascii(a.lettre_voie)
+								when 'e' then ascii(a.lettre_voie)
+								when 'f' then ascii(a.lettre_voie)
+								when 'g' then ascii(a.lettre_voie)
+								when 'h' then ascii(a.lettre_voie)
+								when 'i' then ascii(a.lettre_voie)
+								when 'j' then ascii(a.lettre_voie)
+								when 'k' then ascii(a.lettre_voie)
+								when 'l' then ascii(a.lettre_voie)
+								when 'm' then ascii(a.lettre_voie)
+								when 'n' then ascii(a.lettre_voie)
+								when 'o' then ascii(a.lettre_voie)
+								when 'p' then ascii(a.lettre_voie)
+								when 'q' then ascii(a.lettre_voie)
+								when 'r' then ascii(a.lettre_voie)
+								when 's' then ascii(a.lettre_voie)
+								when 't' then ascii(a.lettre_voie)
+								when 'u' then ascii(a.lettre_voie)
+								when 'v' then ascii(a.lettre_voie)
+								when 'w' then ascii(a.lettre_voie)
+								when 'x' then ascii(a.lettre_voie)
+								when 'y' then ascii(a.lettre_voie)
+								when 'z' then ascii(a.lettre_voie)
+								when '(' then 123
+								when ')' then 124
+								when '[' then 125
+								when ']' then 126
+								when '{' then 127
+								when '}' then 128
+						   end as ordre,
+	   a.lettre_voie,a.nom_voie,a.precision::smallint
+	   from sh_pd.tmp_load_file_jour_releves_voie_ana a order by ordre asc
+NOTICE:  AVANT LOOP
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YAV_V1 YAV_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YAV_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YAV_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (97,'a','YAV_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (4,'a','YAV_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QAV_V1 QAV_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (98,'b','QAV_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (5,'b','QAV_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VAV_V1 VAV_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VAV_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VAV_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (99,'c','VAV_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (6,'c','VAV_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VAV_V1 VAV_V1____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VAV_V1____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VAV_V1____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (99,'c','VAV_V1____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (6,'c','VAV_V1____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YCO_VMER YCO_VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YCO_VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YCO_VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (100,'d','YCO_VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (7,'d','YCO_VMER',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QCO_VMER QCO_VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (101,'e','QCO_VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (8,'e','QCO_VMER',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente QCO_VMER QCO_VMER____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (101,'e','QCO_VMER____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (8,'e','QCO_VMER____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente QCO_VMER QCO_VMER____inconnue________100
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER____inconnue________100 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_VMER____inconnue________100 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (102,'f','QCO_VMER____inconnue________100',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (9,'f','QCO_VMER____inconnue________100',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VCO_1VMER VCO_1VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_1VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_1VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (102,'f','VCO_1VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (9,'f','VCO_1VMER',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VCO_1VMER VCO_1VMER____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_1VMER____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_1VMER____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (102,'f','VCO_1VMER____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (9,'f','VCO_1VMER____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VCO_2VMER VCO_2VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_2VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_2VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (103,'g','VCO_2VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (10,'g','VCO_2VMER',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VCO_2VMER VCO_2VMER____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_2VMER____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_2VMER____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (103,'g','VCO_2VMER____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (10,'g','VCO_2VMER____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VCO_3VMER VCO_3VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_3VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_3VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (104,'h','VCO_3VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (11,'h','VCO_3VMER',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VCO_3VMER VCO_3VMER____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_3VMER____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VCO_3VMER____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (104,'h','VCO_3VMER____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (11,'h','VCO_3VMER____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YAM_V4 YAM_V4 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YAM_V4 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YAM_V4 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (105,'i','YAM_V4',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (12,'i','YAM_V4',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YAM_V1 YAM_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YAM_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YAM_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (106,'j','YAM_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (13,'j','YAM_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YBP_BP YBP_BP 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YBP_BP character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YBP_BP character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (107,'k','YBP_BP',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (14,'k','YBP_BP',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YEP_MOREE YEP_MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YEP_MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YEP_MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (108,'l','YEP_MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (15,'l','YEP_MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QEP_MOREE QEP_MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (109,'m','QEP_MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (16,'m','QEP_MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_1MOREE VEP_1MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (110,'n','VEP_1MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (17,'n','VEP_1MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VEP_1MOREE VEP_1MOREE____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1MOREE____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1MOREE____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (110,'n','VEP_1MOREE____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (17,'n','VEP_1MOREE____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_2MOREE VEP_2MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (111,'o','VEP_2MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (18,'o','VEP_2MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VEP_2MOREE VEP_2MOREE____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2MOREE____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2MOREE____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (111,'o','VEP_2MOREE____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (18,'o','VEP_2MOREE____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_3MOREE VEP_3MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (112,'p','VEP_3MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (19,'p','VEP_3MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente VEP_3MOREE VEP_3MOREE____inconnue________1000
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3MOREE____inconnue________1000 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3MOREE____inconnue________1000 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (112,'p','VEP_3MOREE____inconnue________1000',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (19,'p','VEP_3MOREE____inconnue________1000',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente NB_APPEL NB_APPEL 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN NB_APPEL character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN NB_APPEL character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (113,'q','NB_APPEL',-1)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (20,'q','NB_APPEL',-1)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QAV_UF_V1 QAV_UF_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_UF_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_UF_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (114,'r','QAV_UF_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (21,'r','QAV_UF_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On trouve plusieurs voie de même nom et avec precision differente QAV_V1 QAV_V1____inconnue________100
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_V1____inconnue________100 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV_V1____inconnue________100 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (114,'r','QAV_V1____inconnue________100',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (21,'r','QAV_V1____inconnue________100',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QAV2_V1 QAV2_V1 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV2_V1 character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QAV2_V1 character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (114,'r','QAV2_V1',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (21,'r','QAV2_V1',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente YEP_CROULT_CR YEP_CROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN YEP_CROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN YEP_CROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (115,'s','YEP_CROULT_CR',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (22,'s','YEP_CROULT_CR',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QEP_CROULT_CR QEP_CROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_CROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_CROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (116,'t','QEP_CROULT_CR',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (23,'t','QEP_CROULT_CR',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QEP_UF_MOREE QEP_UF_MOREE 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_UF_MOREE character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_UF_MOREE character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (116,'t','QEP_UF_MOREE',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (23,'t','QEP_UF_MOREE',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QEP_CROULT_UF_CR QEP_CROULT_UF_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_CROULT_UF_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QEP_CROULT_UF_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (117,'u','QEP_CROULT_UF_CR',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (24,'u','QEP_CROULT_UF_CR',-2)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_1DCROULT_CR VEP_1DCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1DCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1DCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (118,'v','VEP_1DCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (25,'v','VEP_1DCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_2DCROULT_CR VEP_2DCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2DCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2DCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (119,'w','VEP_2DCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (26,'w','VEP_2DCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_3DCROULT_CR VEP_3DCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3DCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3DCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (120,'x','VEP_3DCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (27,'x','VEP_3DCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_1GCROULT_CR VEP_1GCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1GCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_1GCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (121,'y','VEP_1GCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (28,'y','VEP_1GCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_2GCROULT_CR VEP_2GCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2GCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_2GCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (122,'z','VEP_2GCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (29,'z','VEP_2GCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente VEP_3GCROULT_CR VEP_3GCROULT_CR 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3GCROULT_CR character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN VEP_3GCROULT_CR character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (123,'(','VEP_3GCROULT_CR',-3)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (30,'(','VEP_3GCROULT_CR',-3)
+NOTICE:  DANS LOOP
+NOTICE:  On ne trouve pas plusieurs voie de même nom ou avec precision differente QCO_UF_VMER QCO_UF_VMER 
+NOTICE:  ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_UF_VMER character varying(100)
+NOTICE:  Reussite ALTER ALTER TABLE sh_pd.archives_releves ADD COLUMN QCO_UF_VMER character varying(100)
+NOTICE:  INSERT INTO table_temporaire_entetes_insert values (124,')','QCO_UF_VMER',-2)
+NOTICE:  INSERT INTO sh_pd.tmp_load_file_jour_releves_voie_ana_archive(position,lettre_voie,nom_voie,precision)  values (31,')','QCO_UF_VMER',-2)
+
+Successfully run. Total query runtime: 165 msec.
+1 rows affected.

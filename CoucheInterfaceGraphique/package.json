@@ -1,0 +1,48 @@
+{
+  "name": "shut",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^31.3.2",
+    "@ag-grid-community/core": "^31.3.2",
+    "@ag-grid-community/react": "^31.3.2",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.6",
+    "@mui/x-date-pickers": "^7.12.0",
+    "@tanstack/react-query": "^5.45.0",
+    "@tanstack/react-query-devtools": "^5.40.1",
+    "ag-charts-community": "^9.3.1",
+    "ag-charts-react": "^9.3.1",
+    "ag-grid-community": "^31.3.4",
+    "ag-grid-react": "^31.3.4",
+    "chart.js": "^4.4.3",
+    "chartjs-plugin-zoom": "^2.0.1",
+    "dayjs": "^1.11.12",
+    "echarts": "^5.5.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.428.0",
+    "next": "14.2.15",
+    "proto-front-v2": "file:",
+    "react": "^18",
+    "react-calendar": "^5.0.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-confirm-alert": "^3.0.6",
+    "react-datepicker": "^7.3.0",
+    "react-dom": "^18",
+    "react-icons": "^5.2.1",
+    "react-modal": "^3.16.1",
+    "react-select": "^5.8.0",
+    "shut": "file:"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}

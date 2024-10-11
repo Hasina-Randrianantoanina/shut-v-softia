@@ -1,0 +1,41 @@
+cat PD_fichier_nabyl_body07_12.csv | grep ";m;" > tmp
+cat tmp | awk -F";" '{if ($5!="") print "OK"}' > tmp5
+cat tmp | awk -F";" '{if ($6!="") print "OK"}' > tmp6
+cat tmp | awk -F";" '{if ($7!="") print "OK"}' > tmp7
+cat tmp | awk -F";" '{if ($8!="") print "OK"}' > tmp8
+cat tmp | awk -F";" '{if ($9!="") print "OK"}' > tmp9
+cat tmp | awk -F";" '{if ($10!="") print "OK"}' > tmp10
+cat tmp | awk -F";" '{if ($11!="") print "OK"}' > tmp11
+cat tmp | awk -F";" '{if ($12!="") print "OK"}' > tmp12
+cat tmp | awk -F";" '{if ($13!="") print "OK"}' > tmp13
+cat tmp | awk -F";" '{if ($14!="") print "OK"}' > tmp14
+cat tmp | awk -F";" '{if ($15!="") print "OK"}' > tmp15
+cat tmp | awk -F";" '{if ($16!="") print "OK"}' > tmp16
+cat tmp | awk -F";" '{if ($17!="") print "OK"}' > tmp17
+cat tmp | awk -F";" '{if ($18!="") print "OK"}' > tmp18
+cat tmp | awk -F";" '{if ($19!="") print "OK"}' > tmp19
+cat tmp | awk -F";" '{if ($20!="") print "OK"}' > tmp20
+cat tmp | awk -F";" '{if ($21!="") print "OK"}' > tmp21
+cat tmp | awk -F";" '{if ($22!="") print "OK"}' > tmp22
+cat tmp | awk -F";" '{if ($23!="") print "OK"}' > tmp23
+cat tmp | awk -F";" '{if ($24!="") print "OK"}' > tmp24
+cat tmp | awk -F";" '{if ($25!="") print "OK"}' > tmp25
+cat tmp | awk -F";" '{if ($26!="") print "OK"}' > tmp26
+cat tmp | awk -F";" '{if ($27!="") print "OK"}' > tmp27
+cat tmp | awk -F";" '{if ($28!="") print "OK"}' > tmp28
+cat tmp | awk -F";" '{if ($29!="") print "OK"}' > tmp29
+cat tmp | awk -F";" '{if ($30!="") print "OK"}' > tmp30
+cat tmp | awk -F";" '{if ($31!="") print "OK"}' > tmp31
+cat tmp | awk -F";" '{if ($32!="") print "OK"}' > tmp32
+cat tmp | awk -F";" '{if ($33!="") print "OK"}' > tmp33
+cat tmp | awk -F";" '{if ($34!="") print "OK"}' > tmp34
+cat tmp | awk -F";" '{if ($35!="") print "OK"}' > tmp35
+cat tmp | awk -F";" '{if ($36!="") print "OK"}' > tmp36
+cat tmp | awk -F";" '{if ($37!="") print "OK"}' > tmp37
+cat tmp | awk -F";" '{if ($38!="") print "OK"}' > tmp38
+cat tmp | awk -F";" '{if ($39!="") print "OK"}' > tmp39
+cat tmp | awk -F";" '{if ($40!="") print "OK"}' > tmp40
+cat tmp5 tmp6 tmp7 tmp8 tmp9 tmp10 tmp11 \
+tmp12 tmp13 tmp14 tmp15 tmp16 tmp17 tmp18 tmp19 tmp20 tmp21 \
+tmp22 tmp23 tmp24 tmp25 tmp26 tmp27 tmp28 tmp29 tmp30 tmp31 tmp32 \
+tmp33 tmp34 tmp35 tmp36 tmp37 tmp38 tmp39 tmp40 | wc -l

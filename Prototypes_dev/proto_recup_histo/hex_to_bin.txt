@@ -1,0 +1,37 @@
+DROP FUNCTION hex_to_bin;
+CREATE OR REPLACE FUNCTION hex_to_bin(hex_value TEXT)
+RETURNS TEXT AS $$
+DECLARE
+    bit_value TEXT := '';
+    hex_digit CHAR;
+    i INT;
+BEGIN
+    FOR i IN 1 .. length(hex_value) LOOP
+        hex_digit := substr(hex_value, i, 1);
+        -- Convertir chaque caractère hexadécimal en sa valeur binaire correspondante
+        CASE hex_digit
+            WHEN '0' THEN bit_value := bit_value || '0000';
+            WHEN '1' THEN bit_value := bit_value || '0001';
+            WHEN '2' THEN bit_value := bit_value || '0010';
+            WHEN '3' THEN bit_value := bit_value || '0011';
+            WHEN '4' THEN bit_value := bit_value || '0100';
+            WHEN '5' THEN bit_value := bit_value || '0101';
+            WHEN '6' THEN bit_value := bit_value || '0110';
+            WHEN '7' THEN bit_value := bit_value || '0111';
+            WHEN '8' THEN bit_value := bit_value || '1000';
+            WHEN '9' THEN bit_value := bit_value || '1001';
+            WHEN 'A' THEN bit_value := bit_value || '1010';
+            WHEN 'B' THEN bit_value := bit_value || '1011';
+            WHEN 'C' THEN bit_value := bit_value || '1100';
+            WHEN 'D' THEN bit_value := bit_value || '1101';
+            WHEN 'E' THEN bit_value := bit_value || '1110';
+            WHEN 'F' THEN bit_value := bit_value || '1111';
+            ELSE RAISE EXCEPTION 'Invalid hex digit: %', hex_digit;
+        END CASE;
+    END LOOP;
+	
+	IF length(bit_value) != 16 then return 'ERREUR='||hex_value; end if;
+
+    RETURN bit_value;
+END;
+$$ LANGUAGE plpgsql;

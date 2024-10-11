@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutomateOperations\AutomateOperations.csproj" />
+    <ProjectReference Include="..\IsodaqOperations\IsodaqOperations.csproj" />
+    <ProjectReference Include="..\SHUT.Core\SHUT.Core.csproj" />
+    <ProjectReference Include="..\StenOperations\StenOperations.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

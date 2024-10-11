@@ -1,0 +1,8 @@
+194 01:21:16.776 Début(der trf 30/12/2021 19:50:00-sans demande vidage)
+194 01:21:17.039 Lecture : D:\ProdShut\DonnéesShut\CrAppels\AsNet\194\194_01012022012116_202112311953.XDQ
+194 01:21:19.073 codage shut->D:\ProdShut\DonnéesShut\CrAppels\AsNet\194\194_01012022012116.man 1,1901576s
+194 01:21:19.081 Traitement : D:\ProdShut\DonnéesShut\CrAppels\AsNet\194\194018D21.MAN
+194 01:21:19.145 insertion 0,0629997s
+194 01:21:19.151 Lecture de 1 fichiers XDQ
+194 01:21:19.156 Fin Lecture XDQ
+194 01:21:27.569 to fin com

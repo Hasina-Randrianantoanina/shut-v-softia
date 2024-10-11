@@ -1,0 +1,37 @@
+SELECT 	COALESCE(r.time,'') as time,r.ch2,r.ch3,substr(r.ch3,3,2) as type,substr(r.ch3,5,2) as numvoie, substr(r.ch3,6,1) typecession,
+									COALESCE(r.evenement,'') as evenement,
+									CASE 
+										WHEN r.ch2='aa9999' THEN 
+											 CASE
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='21' THEN
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),public.type_resobs(v_station),'Début de défaut capteur','Début de défaut capteur de nom ???'))
+												 
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='20' THEN 
+												      (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),public.type_resobs(v_station),'Fin de défaut capteur','Fin de défaut capteur de nom ???'))
+										
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='10' THEN 
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),'ET','Fin déf état','Fin déf voie état de nom ???'))
+																 
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='11' THEN 
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),'ET','Début déf état','Début déf voie état de nom ???'))																 																									 
+											 END
+										WHEN r.ch2='aa8888' THEN
+											 CASE
+												 WHEN COALESCE(substr(r.ch3,1,6),'')='bb0001' THEN 'Début de session (AutoShut)'
+												 WHEN COALESCE(substr(r.ch3,1,6),'')='bb0002' THEN 'Fin de session (AutoShut)'
+												 WHEN COALESCE(substr(r.ch3,1,6),'') not in ('bb0001','bb0002') THEN
+                                                      CASE
+															WHEN COALESCE(substr(r.ch3,6,1),'')='1' THEN 'Début de session'
+															WHEN COALESCE(substr(r.ch3,6,1),'')='2' THEN 'Fin de session'
+															WHEN COALESCE(substr(r.ch3,6,1),'') not in ('1','2') THEN 'DEFAUT DANS CETTE LIGNE'
+													  END
+											 END
+										WHEN r.ch2 not in ('aa8888','aa9999') THEN 
+											 CASE
+												   WHEN COALESCE(substr(r.ch3,6,1),'')='1' THEN 'Début de session'
+												   WHEN COALESCE(substr(r.ch3,6,1),'')='2' THEN 'Fin de session'
+												   WHEN COALESCE(substr(r.ch3,6,1),'') not in ('bb0001','bb0002') THEN 'DEFAUT DANS CETTE LIGNE'
+	                                         END
+									END as libelle_evenement 
+					   FROM 	sh_pd.tmp_load_file_jour_releves r
+					   where    r.evenement in ('$') ORDER BY time asc;

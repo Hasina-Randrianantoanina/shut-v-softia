@@ -1,0 +1,160 @@
+cat PD_fichier_nabyl_body07_12.csv | grep ";m" > tmp
+cat tmp | awk -F";" '{if ($5!="") print "OK"}' > tmp5
+cat tmp | awk -F";" '{if ($6!="") print "OK"}' > tmp6
+cat tmp | awk -F";" '{if ($7!="") print "OK"}' > tmp7
+cat tmp | awk -F";" '{if ($8!="") print "OK"}' > tmp8
+cat tmp | awk -F";" '{if ($9!="") print "OK"}' > tmp9
+cat tmp | awk -F";" '{if ($10!="") print "OK"}' > tmp10
+cat tmp | awk -F";" '{if ($11!="") print "OK"}' > tmp11
+cat tmp | awk -F";" '{if ($12!="") print "OK"}' > tmp12
+cat tmp | awk -F";" '{if ($13!="") print "OK"}' > tmp13
+cat tmp | awk -F";" '{if ($14!="") print "OK"}' > tmp14
+cat tmp | awk -F";" '{if ($15!="") print "OK"}' > tmp15
+cat tmp | awk -F";" '{if ($16!="") print "OK"}' > tmp16
+cat tmp | awk -F";" '{if ($17!="") print "OK"}' > tmp17
+cat tmp | awk -F";" '{if ($18!="") print "OK"}' > tmp18
+cat tmp | awk -F";" '{if ($19!="") print "OK"}' > tmp19
+cat tmp | awk -F";" '{if ($20!="") print "OK"}' > tmp20
+cat tmp | awk -F";" '{if ($21!="") print "OK"}' > tmp21
+cat tmp | awk -F";" '{if ($22!="") print "OK"}' > tmp22
+cat tmp | awk -F";" '{if ($23!="") print "OK"}' > tmp23
+cat tmp | awk -F";" '{if ($24!="") print "OK"}' > tmp24
+cat tmp | awk -F";" '{if ($25!="") print "OK"}' > tmp25
+cat tmp | awk -F";" '{if ($26!="") print "OK"}' > tmp26
+cat tmp | awk -F";" '{if ($27!="") print "OK"}' > tmp27
+cat tmp | awk -F";" '{if ($28!="") print "OK"}' > tmp28
+cat tmp | awk -F";" '{if ($29!="") print "OK"}' > tmp29
+cat tmp | awk -F";" '{if ($30!="") print "OK"}' > tmp30
+cat tmp | awk -F";" '{if ($31!="") print "OK"}' > tmp31
+cat tmp | awk -F";" '{if ($32!="") print "OK"}' > tmp32
+cat tmp1 tmp2 tmp3 tmp4 tmp5 tmp6 tmp7 tmp8 tmp9 tmp10 tmp11 \
+tmp12 tmp13 tmp14 tmp15 tmp16 tmp17 tmp18 tmp19 tmp20 tmp21 \
+tmp22 tmp23 tmp24 tmp25 tmp26 tmp27 tmp28 tmp29 tmp30 tmp31 tmp32 | wc -l
+
+	-- 575544 -- 575550
+SELECT 	count(*)
+					   FROM sh_pd.tmp_load_file_jour_releves_voie_ana a, 
+							sh_pd.tmp_load_file_jour_releves r,
+							sh_pd.tmp_load_file_jour_releves_voie_ana_archive t
+					   where a.fichier=r.fichier and a.lettre_voie=t.lettre_voie
+	                   and a.nom_voie=substr(t.nom_voie,1,position('___' in t.nom_voie)-1)
+					   and (
+							   (r.ch2 is not null and substr(r.ch2,1,1)=a.lettre_voie)
+									or
+	                           (r.ch3 is not null and substr(r.ch3,1,1)=a.lettre_voie)	
+									or
+							   (r.ch4 is not null and substr(r.ch4,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch5 is not null and substr(r.ch5,1,1)=a.lettre_voie)
+							        or
+	                           (r.ch6 is not null and substr(r.ch6,1,1)=a.lettre_voie)
+									or
+	                           (r.ch7 is not null and substr(r.ch7,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch8 is not null and substr(r.ch8,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch9 is not null and substr(r.ch9,1,1)=a.lettre_voie)     
+									or
+	                           (r.ch10 is not null and substr(r.ch10,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch11 is not null and substr(r.ch11,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch12 is not null and substr(r.ch12,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch13 is not null and substr(r.ch13,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch14 is not null and substr(r.ch14,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch15 is not null and substr(r.ch15,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch16 is not null and substr(r.ch16,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch17 is not null and substr(r.ch17,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch18 is not null and substr(r.ch18,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch19 is not null and substr(r.ch19,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch20 is not null and substr(r.ch20,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch21 is not null and substr(r.ch21,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch22 is not null and substr(r.ch22,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch23 is not null and substr(r.ch23,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch24 is not null and substr(r.ch24,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch25 is not null and substr(r.ch25,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch26 is not null and substr(r.ch26,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch27 is not null and substr(r.ch27,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch28 is not null and substr(r.ch28,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch29 is not null and substr(r.ch29,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch30 is not null and substr(r.ch30,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch31 is not null and substr(r.ch31,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch32 is not null and substr(r.ch32,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch33 is not null and substr(r.ch33,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch35 is not null and substr(r.ch35,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch36 is not null and substr(r.ch36,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch37 is not null and substr(r.ch37,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch38 is not null and substr(r.ch38,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch39 is not null and substr(r.ch39,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch40 is not null and substr(r.ch40,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch41 is not null and substr(r.ch41,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch42 is not null and substr(r.ch42,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch43 is not null and substr(r.ch43,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch44 is not null and substr(r.ch44,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch45 is not null and substr(r.ch45,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch46 is not null and substr(r.ch46,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch47 is not null and substr(r.ch47,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch48 is not null and substr(r.ch48,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch49 is not null and substr(r.ch49,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch50 is not null and substr(r.ch50,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch51 is not null and substr(r.ch51,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch52 is not null and substr(r.ch52,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch53 is not null and substr(r.ch53,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch54 is not null and substr(r.ch54,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch55 is not null and substr(r.ch55,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch56 is not null and substr(r.ch56,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch57 is not null and substr(r.ch57,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch58 is not null and substr(r.ch58,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch59 is not null and substr(r.ch59,1,1)=a.lettre_voie)
+                                    or
+	                           (r.ch60 is not null and substr(r.ch60,1,1)=a.lettre_voie)
+					   )
+				       --and   r.evenement in (' ','m','G','P','T','I','J','U','V','L') ORDER BY r.TIME;
+					   and   r.evenement in (' ','m','G','P','T') --and r.fichier='PD301107.S01' -- 8470 
+                       order by r.fichier asc, r.time asc

@@ -1,0 +1,94 @@
+@import "~ag-grid-community/styles/ag-theme-quartz.css";
+
+.ag-theme-quartz {
+  /* Variables de base */
+  --ag-border-color: none;
+  --ag-row-border-style: none;
+  --ag-odd-row-background-color: rgba(0, 0, 0, 0.05);
+  --ag-selected-row-background-color: rgba(51, 208, 151, 0.3);
+  --ag-cell-vertical-border: solid rgb(0, 0, 0, 1);
+  --ag-grid-size: 12px;
+
+  /* En-tête */
+  --ag-header-background-color: rgba(226, 232, 240, 0.8);
+  --ag-header-column-separator-display: block;
+  --ag-header-column-separator-height: 30%;
+  --ag-header-column-separator-width: 1px;
+  --ag-header-column-separator-color: gray;
+
+  /* Z-index */
+  --ag-header-column-separator-z-index: 1;
+}
+
+/* En-tête */
+.ag-theme-quartz .ag-header-cell-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.ag-theme-quartz .ag-header-cell-resize {
+  z-index: 2 !important;
+}
+
+/* Cellules */
+.ag-theme-quartz .ag-cell {
+  transition: none !important;
+}
+
+.ag-theme-quartz .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-quartz .ag-cell-focus:not(.ag-cell-range-selected) {
+  border: 2px solid #0d688b !important;
+}
+
+/* Édition en ligne */
+/* Cellule en mode édition */
+.ag-theme-quartz .ag-cell-focus.ag-cell-inline-editing,
+.ag-theme-quartz .ag-cell-inline-editing {
+  border: 1.5px solid #0d688b !important;
+  background-color: 51, 208, 151, 0.3 !important; 
+  padding: 1 !important; 
+}
+
+/* Input à l'intérieur de la cellule en édition */
+.ag-theme-quartz .ag-cell-inline-editing input,
+.ag-theme-quartz .ag-cell-inline-editing textarea {
+  border: none !important;
+  outline: none !important;
+  background-color: transparent !important; 
+  width: 100% !important;
+  height: 100% !important;
+  padding: 6px !important; 
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Checkbox */
+.ag-theme-quartz .ag-checkbox-input-wrapper {
+  margin: 5px !important;
+}
+
+/* Défilement horizontal */
+.ag-theme-quartz .ag-body-horizontal-scroll {
+  overflow-x: scroll !important;
+}
+
+/* Z-index pour les éléments de la grille */
+.ag-theme-quartz .ag-root-wrapper,
+.ag-theme-quartz .ag-root {
+  z-index: 0 !important;
+}
+
+.ag-theme-quartz .ag-header,
+.ag-theme-quartz .ag-header-row,
+.ag-theme-quartz .ag-header-cell {
+  z-index: 1 !important;
+}
+
+/* Modal */
+.ReactModal__Overlay {
+  z-index: 1000 !important;
+}
+
+.ReactModal__Content {
+  z-index: 1001 !important;
+}

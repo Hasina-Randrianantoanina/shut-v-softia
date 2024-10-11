@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+
+
+# virtualenv
+.venv
+env/
+venv/
+
+Voies/
+Voies_BR/
+Voies_PD*/
+Traitement_Analyse/
+
+AB/
+PD/
+
+
+*.xlsx
+*.csv

@@ -1,0 +1,82 @@
+E:='Changement de jour';
+if v_first_evenement in (' ','mm','G','P','T')
+then
+	v_first_libelle_evenement:='mesure';
+elsif v_first_evenement = 'I'
+then
+	v_first_libelle_evenement:='événement initial';
+elsif v_first_evenement = 'J'
+then
+	v_first_libelle_evenement:='événement journalier';
+elsif v_first_evenement = 'U'
+then
+	v_first_libelle_evenement:='modification seuil';
+elsif v_first_evenement = 'V'
+then
+	v_first_libelle_evenement:='modification delta';
+elsif v_first_evenement = 'L'
+then
+	v_first_libelle_evenement:='événement sur vidage';
+end if;
+if v_first_evenement = 'C'
+then
+	v_first_libelle_evenement:='Modif cadence';
+elsif v_first_evenement = 'Q'
+then
+	v_first_libelle_evenement:='Modif config';
+elsif v_first_evenement = 'X'
+then
+	v_first_libelle_evenement:='reset';
+elsif v_first_evenement = 'N'
+then
+	v_first_libelle_evenement:='effacement mémoire';
+elsif v_first_evenement = 'B'
+then
+	v_first_libelle_evenement:='bouclage jour';
+elsif v_first_evenement = 'M'
+then
+	v_first_libelle_evenement:='bouclage mémoire';
+elsif v_first_evenement = 'Y'
+then
+	v_first_libelle_evenement:='coupure secteur';
+end if;
+
+Pour $ : r.ch2 = 2ème champ après l'heure. r.ch3=3ème champ après heure.
+j'ai doublé les lettres a et b en aa et bb : revoir les position substr(r.ch3,5,2) ==> substr(r.ch3,4,2)
+
+CurRelEvDollar CURSOR (v_station character varying (10)) FOR SELECT COALESCE(r.time,'') as time,
+										 CASE 
+										 WHEN r.ch2='aa9999' THEN 
+											 CASE
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='21' THEN
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),public.type_resobs(v_station),'Début de défaut capteur','Début de défaut capteur de nom ???'))
+												 
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='20' THEN 
+												      (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),public.type_resobs(v_station),'Fin de défaut capteur','Fin de défaut capteur de nom ???'))
+										
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='10' THEN 
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),'ET','Fin déf état','Fin déf voie état de nom ???'))
+																 
+												 WHEN COALESCE(substr(r.ch3,3,2),'')='11' THEN 
+													  (select public.nom_voie(v_station,COALESCE(substr(r.ch3,5,2),''),'ET','Début déf état','Début déf voie état de nom ???'))																 																									 
+											 END
+										 WHEN r.ch2='aa8888' THEN
+											 CASE
+												 WHEN COALESCE(substr(r.ch3,1,6),'')='bb0001' THEN 'Début de session (AutoShut)'
+												 WHEN COALESCE(substr(r.ch3,1,6),'')='bb0002' THEN 'Fin de session (AutoShut)'
+												 WHEN COALESCE(substr(r.ch3,1,6),'') not in ('bb0001','bb0002') THEN
+                                                      CASE
+															WHEN COALESCE(substr(r.ch3,6,1),'')='1' THEN 'Début de session'
+															WHEN COALESCE(substr(r.ch3,6,1),'')='2' THEN 'Fin de session'
+															WHEN COALESCE(substr(r.ch3,6,1),'') not in ('1','2') THEN 'DEFAUT DANS CETTE LIGNE'
+													  END
+											 END
+										 WHEN r.ch2 not in ('aa8888','aa9999') THEN 
+											 CASE
+												   WHEN COALESCE(substr(r.ch3,6,1),'')='1' THEN 'Début de session'
+												   WHEN COALESCE(substr(r.ch3,6,1),'')='2' THEN 'Fin de session'
+												   WHEN COALESCE(substr(r.ch3,6,1),'') not in ('bb0001','bb0002') THEN 'DEFAUT DANS CETTE LIGNE'
+	                                         END
+										 END as libelle_evenement 
+					   FROM 	sh_pd.tmp_load_file_jour_releves r
+					   where    r.evenement in ('$') ORDER BY time asc;

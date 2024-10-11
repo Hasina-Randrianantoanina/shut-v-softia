@@ -1,0 +1,216 @@
+﻿using Reseau.Utils;
+
+namespace Reseau.AutomateProtocol
+{
+    // Automate Premium (D13 RU)
+    public class ENProtocol : IAutomateProtocol
+    {
+
+        public readonly Dictionary<string, Byte[][]> dictionnary = CreateDictionnary();
+        public int GetStatusCount { get; set; }
+        public int Read120MotsCount { get; set; }
+
+        public Byte[] CalculResponse(string question)
+        {
+            if (dictionnary.TryGetValue(question, out Byte[][] response))
+            {
+                Byte[] result;
+                if (question.Equals(BitConverter.ToString(ConversionUtils.QuestionAutomateToByteArray("010313920003")).Replace("-", "")))
+                {
+                    result = response[GetStatusCount];
+                    GetStatusCount++;
+                }
+                else if (question.Equals(BitConverter.ToString(ConversionUtils.QuestionAutomateToByteArray("010313960078")).Replace("-", "")))
+                {
+                    result = response[Read120MotsCount];
+                    Read120MotsCount++;
+                }
+                else
+                {
+                    result = response[0];
+                }
+
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        private static Dictionary<string, Byte[][]> CreateDictionnary()
+        {
+            Dictionary<string, Byte[][]> dictionnary = new Dictionary<string, Byte[][]>();
+
+            // ------------------------ 1st command : Are there available datas ?
+            // connexion -> reseau
+            Byte[] availableDatasQuestion = ConversionUtils.QuestionAutomateToByteArray("010313920003");
+            string availableDatasQuestionStr = BitConverter.ToString(availableDatasQuestion).Replace("-", "");
+            // reseau -> connexion
+            Byte[] availableDatasResponse = ConversionUtils.ResponseAutomateToByteArray("000000000009010306000000010000");
+
+            // ------------------------ 2nd command : LECT CONFIG_VER
+            // connexion -> reseau
+            Byte[] lectureVersionQuestion = ConversionUtils.QuestionAutomateToByteArray("010313740008");
+            string lectureVersionQuestionStr = BitConverter.ToString(lectureVersionQuestion).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureVersionResponse = ConversionUtils.ResponseAutomateToByteArray("00000000001301031031444133333561413130000000000000");
+            dictionnary.Add(lectureVersionQuestionStr, new Byte[][] { lectureVersionResponse });
+
+            // ------------------------ 3rd command : LECT CONFIG_ANA 1/5
+            // connexion -> reseau
+            Byte[] lectureConfigAnaQuestion1 = ConversionUtils.QuestionAutomateToByteArray("010317700075");
+            string lectureConfigAnaQuestion1Str = BitConverter.ToString(lectureConfigAnaQuestion1).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureConfigAnaResponse1 = ConversionUtils.ResponseAutomateToByteArray("0000000000ED0103EA119400050000BF8000004248D70A3CA30000119600050000BF8000004248D70A3CA30000119800050000BF8000004248000000000000119A00050000BF8000004248CCCD3D4C0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureConfigAnaQuestion1Str, new Byte[][] { lectureConfigAnaResponse1 });
+
+            // ------------------------ 4th command : LECT CONFIG_ANA 2/5
+            // connexion -> reseau
+            Byte[] lectureConfigAnaQuestion2 = ConversionUtils.QuestionAutomateToByteArray("010317E50075");
+            string lectureConfigAnaQuestion2Str = BitConverter.ToString(lectureConfigAnaQuestion2).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureConfigAnaResponse2 = ConversionUtils.ResponseAutomateToByteArray("0000000000ED0103EA000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureConfigAnaQuestion2Str, new Byte[][] { lectureConfigAnaResponse2 });
+
+            // ------------------------ 5th command : LECT CONFIG_ANA 3/5
+            // connexion -> reseau
+            Byte[] lectureConfigAnaQuestion3 = ConversionUtils.QuestionAutomateToByteArray("0103185A0075");
+            string lectureConfigAnaQuestion3Str = BitConverter.ToString(lectureConfigAnaQuestion3).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureConfigAnaResponse3 = ConversionUtils.ResponseAutomateToByteArray("0000000000ED0103EA000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureConfigAnaQuestion3Str, new Byte[][] { lectureConfigAnaResponse3 });
+
+            // ------------------------ 6th command : LECT CONFIG_ANA 4/5
+            // connexion -> reseau
+            Byte[] lectureConfigAnaQuestion4 = ConversionUtils.QuestionAutomateToByteArray("010318CF0075");
+            string lectureConfigAnaQuestion4Str = BitConverter.ToString(lectureConfigAnaQuestion4).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureConfigAnaResponse4 = ConversionUtils.ResponseAutomateToByteArray("0000000000ED0103EA000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureConfigAnaQuestion4Str, new Byte[][] { lectureConfigAnaResponse4 });
+
+            // ------------------------ 7th command : LECT CONFIG_ANA 5/5
+            // connexion -> reseau
+            Byte[] lectureConfigAnaQuestion5 = ConversionUtils.QuestionAutomateToByteArray("010319440048");
+            string lectureConfigAnaQuestion5Str = BitConverter.ToString(lectureConfigAnaQuestion5).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureConfigAnaResponse5 = ConversionUtils.ResponseAutomateToByteArray("000000000093010390000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureConfigAnaQuestion5Str, new Byte[][] { lectureConfigAnaResponse5 });
+
+            // ------------------------ 8th command : LECT VALTR_ANA
+            // connexion -> reseau
+            Byte[] lectureValeurTRAnaQuestion = ConversionUtils.QuestionAutomateToByteArray("010311940078");
+            string lectureValeurTRAnaQuestionStr = BitConverter.ToString(lectureValeurTRAnaQuestion).Replace("-", "");
+            // reseau -> connexion
+            Byte[] lectureValeurTRAnaResponse = ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0C28F41D9A99341DA3D7141D62F1B3F9D0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+            dictionnary.Add(lectureValeurTRAnaQuestionStr, new Byte[][] { lectureValeurTRAnaResponse });
+
+            // DATA
+
+            // lecture de 3 mots (010613920003)
+            Byte[] status1 = ConversionUtils.ResponseAutomateToByteArray("000000000009010306000000010000");
+            Byte[] status11 = ConversionUtils.ResponseAutomateToByteArray("000000000009010306000100010078");
+            Byte[] status12 = ConversionUtils.ResponseAutomateToByteArray("00000000000901030600010002001E"); // last 30 mots
+            Byte[] status13 = ConversionUtils.ResponseAutomateToByteArray("000000000009010306000100030078");
+
+            Byte[] getStatus1 = status1;
+            Byte[] getStatus2 = status13;
+            Byte[] getStatus3 = status11;
+            Byte[] getStatus4 = status13;
+            Byte[] getStatus5 = status11;
+            Byte[] getStatus6 = status13;
+            Byte[] getStatus7 = status11;
+            Byte[] getStatus8 = status13;
+            Byte[] getStatus9 = status11;
+            Byte[] getStatus10 = status13;
+            Byte[] getStatus11 = status11;
+            Byte[] getStatus12 = status13;
+            Byte[] getStatus13 = status11;
+            Byte[] getStatus14 = status13;
+            Byte[] getStatus15 = status11;
+            Byte[] getStatus16 = status13;
+            Byte[] getStatus17 = status11;
+            Byte[] getStatus18 = status13;
+            Byte[] getStatus19 = status11;
+            Byte[] getStatus20 = status13;
+            Byte[] getStatus21 = status11;
+            Byte[] getStatus22 = status13;
+            Byte[] getStatus23 = status11;
+            Byte[] getStatus24 = status12;
+            Byte[][] getStatusQuestions = new Byte[][] {
+            availableDatasResponse,
+            getStatus1,
+            getStatus2,
+            getStatus3,
+            getStatus4,
+            getStatus5,
+            getStatus6,
+            getStatus7,
+            getStatus8,
+            getStatus9,
+            getStatus10,
+            getStatus11,
+            getStatus12,
+            getStatus13,
+            getStatus14,
+            getStatus15,
+            getStatus16,
+            getStatus17,
+            getStatus18,
+            getStatus19,
+            getStatus20,
+            getStatus21,
+            getStatus22,
+            getStatus23,
+            getStatus24
+            };
+            dictionnary.Add(availableDatasQuestionStr, getStatusQuestions);
+
+            // starting
+            Byte[] startingTransfertQuestion = ConversionUtils.QuestionAutomateToByteArray("010613920001");
+            string startingTransfertQuestionStr = BitConverter.ToString(startingTransfertQuestion).Replace("-", "");
+            Byte[] startingTransfertQuestionResponse = ConversionUtils.ResponseAutomateToByteArray("000000000006010613920001");
+            dictionnary.Add(startingTransfertQuestionStr, new Byte[][] { startingTransfertQuestionResponse });
+
+            // continue transfert
+            Byte[] continueTransfertQuestion = ConversionUtils.QuestionAutomateToByteArray("010613920003");
+            string continueTransfertQuestionStr = BitConverter.ToString(continueTransfertQuestion).Replace("-", "");
+            Byte[] continueTransfertQuestionResponse = ConversionUtils.ResponseAutomateToByteArray("000000000006010613920003");
+            dictionnary.Add(continueTransfertQuestionStr, new Byte[][] { continueTransfertQuestionResponse });
+
+            // ending
+            Byte[] endingTransfertQuestion = ConversionUtils.QuestionAutomateToByteArray("010613920002");
+            string endingTransfertQuestionStr = BitConverter.ToString(endingTransfertQuestion).Replace("-", "");
+            Byte[] endingTransfertQuestionResponse = ConversionUtils.ResponseAutomateToByteArray("000000000006010613920002");
+            dictionnary.Add(endingTransfertQuestionStr, new Byte[][] { endingTransfertQuestionResponse });
+
+            // reading 120 mots
+            Byte[] reading120motsQuestion = ConversionUtils.QuestionAutomateToByteArray("010313960078");
+            string reading120motsQuestionStr = BitConverter.ToString(reading120motsQuestion).Replace("-", "");
+
+            Byte[][] read120motsQuestions = new Byte[][] {
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0A6FD155F000340013D7141D6A739155F000340013D7141D6A739155F0004400153F83F83A775155F000340013D7141D6A776155F001D100000000000A7B1155F000340013D7141D6A7EE155F000340013D7141D6A82A155F000340013D7141D6A866155F000340013D7141D6A8A2155F000340013D7141D6A8A2155F001D100000003F80A8DE155F000340013D7141D6A91A155F000340013D7141D6A956155F000340013D7141D6A992155F000340013D7141D6A992155F000440017EFA3F8AA9CE155F001D100000000000A9CE155F000340013D7141D6AA0B155F000240017EFA41DAAA0B155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0AA47155F000340013D7141D6AA83155F000340013D7141D6AABF155F000340013D7141D6AAFA155F001D100000003F80AAFB155F000340013D7141D6AB37155F000340013D7141D6AB73155F000340013D7141D6ABAF155F000340013D7141D6ABEC155F000340013D7141D6AC26155F001D100000000000AC28155F000340013D7141D6AC28155F00044001A9FC3F91AC64155F000340013D7141D6ACA0155F000340013D7141D6ACDC155F000340013D7141D6AD18155F000340013D7141D6AD53155F001D100000003F80AD54155F000340013D7141D6AD91155F000340013D7141D6ADCD155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0ADCD155F00044001D4FE3F98AE09155F000340013D7141D6AE45155F00024001AC0941DAAE45155F000340013D7141D6AE7F155F001D100000000000AE81155F000340013D7141D6AEBD155F000340013D7141D6AEF9155F000340013D7141D6AF35155F000340013D7141D6AF71155F000340013D7141D6AFAB155F001D100000003F80AFAE155F000340013D7141D6AFAE155F000440013B653F9FAFEA155F000340013D7141D6B026155F000340013D7141D6B062155F000340013D7141D6B09E155F000340013D7141D6B0D7155F001D100000000000B0DA155F000340013D7141D6B116155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0B152155F000340013D7141D6B18F155F000340013D7141D6B1CB155F000340013D7141D6B1CB155F00044001A1CB3FA5B203155F001D100000003F80B207155F000340013D7141D6B243155F000340013D7141D6B27F155F000340013D7141D6B2BB155F000340013D7141D6B2F7155F000340013D7141D6B32F155F001D100000000000B333155F000340013D7141D6B36F155F000340013D7141D6B3AC155F000340013D7141D6B3E8155F000340013D7141D6B424155F000340013D7141D6B45B155F001D100000003F80B460155F000340013D7141D6B49C155F000340013D7141D6B4D8155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0B514155F000340013D7141D6B550155F000340013D7141D6B587155F001D100000000000B58C155F000340013D7141D6B5C9155F000340013D7141D6B605155F000340013D7141D6B641155F000340013D7141D6B67D155F000340013D7141D6B6B3155F001D100000003F80B6B9155F000340013D7141D6B6F5155F000340013D7141D6B731155F000340013D7141D6B76D155F000340013D7141D6B7AA155F000340013D7141D6B7DF155F001D100000000000B7E6155F000340013D7141D6B822155F000340013D7141D6B85E155F000340013D7141D6B89A155F000340013D7141D6B8D6155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0B90B155F001D100000003F80B912155F000340013D7141D6B94E155F000340013D7141D6B98B155F000340013D7141D6B9C7155F000340013D7141D6BA03155F000340013D7141D6BA37155F001D100000000000BA3F155F000340013D7141D6BA7B155F000340013D7141D6BAB7155F000340013D7141D6BAF3155F000340013D7141D6BB2F155F000340013D7141D6BB63155F001D100000003F80BB6B155F000340013D7141D6BBA8155F000340013D7141D6BBE4155F000340013D7141D6BC20155F000340013D7141D6BC5C155F000340013D7141D6BC8F155F001D100000000000BC98155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0BCD4155F000340013D7141D6BD10155F000340013D7141D6BD4D155F000340013D7141D6BD89155F000340013D7141D6BDBB155F001D100000003F80BDC5155F000340013D7141D6BE01155F000340013D7141D6BE3D155F000340013D7141D6BE79155F000340013D7141D6BEB5155F000340013D7141D6BEE7155F001D100000000000BEF1155F000340013D7141D6BF2D155F000340013D7141D6BF6A155F000340013D7141D6BFA6155F000340013D7141D6BFE2155F000340013D7141D6C014155F001D100000003F80C01E155F000340013D7141D6C05A155F000340013D7141D6C096155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0C0D2155F000340013D7141D6C10E155F000340013D7141D6C140155F001D100000000000C14A155F000340013D7141D6C187155F000340013D7141D6C1C3155F000340013D7141D6C1FF155F000340013D7141D6C23B155F000340013D7141D6C26C155F001D100000003F80C277155F000340013D7141D6C2B3155F000340013D7141D6C2EF155F000340013D7141D6C32B155F000340013D7141D6C367155F000340013D7141D6C398155F001D100000000000C3A4155F000340013D7141D6C3E0155F000340013D7141D6C41C155F000340013D7141D6C458155F000340013D7141D6C494155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0C4C4155F001D100000003F80C4D0155F000340013D7141D6C50C155F000340013D7141D6C548155F000340013D7141D6C585155F000340013D7141D6C5C1155F000340013D7141D6C5F0155F001D100000000000C5FD155F000340013D7141D6C639155F000340013D7141D6C639155F000440013B653F9FC675155F000340013D7141D6C6B1155F000340013D7141D6C6ED155F000340013D7141D6C71C155F001D100000003F80C729155F000340013D7141D6C766155F000340013D7141D6C7A2155F000340013D7141D6C7DE155F000340013D7141D6C81A155F000340013D7141D6C848155F001D100000000000"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0C856155F000340013D7141D6C892155F000340013D7141D6C8CE155F000340013D7141D6C90A155F000340013D7141D6C946155F000340013D7141D6C974155F001D100000003F80C983155F000340013D7141D6C9BF155F000340013D7141D6C9FB155F000340013D7141D6CA37155F000340013D7141D6CA73155F000340013D7141D6CAA0155F001D100000000000CAAF155F000340013D7141D6CAEB155F000340013D7141D6CB28155F000340013D7141D6CB64155F000340013D7141D6CBA0155F000340013D7141D6CBCC155F001D100000003F80CBDC155F000340013D7141D6CC18155F000340013D7141D6"),
+            ConversionUtils.ResponseAutomateToByteArray("0000000000F30103F0CC54155F000340013D7141D6CC90155F000340013D7141D6CCCC155F000340013D7141D6CCF8155F001D100000000000CD08155F000340013D7141D6CD45155F000340013D7141D6CD81155F000340013D7141D6CDBD155F000340013D7141D6CDF9155F000340013D7141D6CE24155F001D100000003F80CE35155F000340013D7141D6CE71155F000340013D7141D6CEAD155F000340013D7141D6CEE9155F000340013D7141D6CF26155F000340013D7141D6CF50155F001D100000000000CF62155F000340013D7141D6CF9E155F000340013D7141D6CFDA155F000340013D7141D6D016155F000340013D7141D6"),
+            };
+            dictionnary.Add(reading120motsQuestionStr, read120motsQuestions);
+
+            // reading 30 mots
+            Byte[] reading30motsQuestion = ConversionUtils.QuestionAutomateToByteArray("01031396001E");
+            string reading30motsQuestionStr = BitConverter.ToString(reading30motsQuestion).Replace("-", "");
+            Byte[] reading30motsQuestionResponse = ConversionUtils.ResponseAutomateToByteArray("00000000003F01033CD052155F000340013D7141D6D07C155F001D100000003F80D08E155F000340013D7141D6D0CA155F000340013D7141D6D106155F000340013D7141D6");
+            dictionnary.Add(reading30motsQuestionStr, new Byte[][] { reading30motsQuestionResponse });
+
+            return dictionnary;
+        }
+    }
+}
